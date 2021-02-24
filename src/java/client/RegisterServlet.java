@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -78,31 +80,46 @@ public class RegisterServlet extends HttpServlet {
         String fullName = request.getParameter("fullname");
         String userType = "client";  
         
-        String sqlInsert = "INSERT INTO user(login, password, userType, fullName) VALUES(?, ?, ?, ?);"; 
+        
+        //generate salt
+	int length = 30;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        String salt = RandomStringUtils.random(length, useLetters, useNumbers);        
+        
+        //generate password hash
+        String passwordHash = DigestUtils.sha512Hex(password + salt);
+        
+        
+        String sqlInsert = "INSERT INTO user(login, password, salt, userType, fullName) VALUES(?, ?, ?, ?, ?);"; 
         
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
             preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, userType);
-            preparedStatement.setString(4, fullName);
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(2, passwordHash);
+            preparedStatement.setString(3, salt);
+            preparedStatement.setString(4, userType);
+            preparedStatement.setString(5, fullName);
+            
+            int insertStatus = 0;  
+            insertStatus = preparedStatement.executeUpdate();
             
             User user = new User();
             
             user.setLogin(login);
             user.setFullName(fullName);
-            user.setPassword(password);
+            user.setPassword(passwordHash);
+            user.setSalt(salt);
             user.setUserType(userType);
             
-            //request.setAttribute("newuser", user);
-            //sendPage(request, response, "/regsuccess.jsp");
+            PrintWriter out = response.getWriter();
             
-            //Get the session object
-            //sendRedirect doesn't recognise request object
-            //only session
-            session.setAttribute("clientloggedin", user);
-            response.sendRedirect(request.getContextPath() + "/client.jsp");
+            if (insertStatus == 1) {
+                out.println("<script>");
+                out.println("    alert('Account created successfully');");
+                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("</script>");
+            }
         }
         catch (SQLException ex) {   
             throw new ServletException("Register failed", ex);

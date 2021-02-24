@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -29,9 +30,8 @@ public class LoginServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
-    
-    public void init() throws ServletException
-    {
+
+    public void init() throws ServletException {
         String driver = "com.mysql.jdbc.Driver";
 
         String dbName = "sportCenter";
@@ -40,22 +40,18 @@ public class LoginServlet extends HttpServlet {
         String password = "";
 
         jdbcUtility = new JDBCUtility(driver,
-                                      url,
-                                      userName,
-                                      password);
+                url,
+                userName,
+                password);
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-        
-        
-        
-        
-    }    
+
+    }
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -64,59 +60,76 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
+
         User user = new User();
-        
+
         //Get the session object
-	HttpSession session = request.getSession();
-        
+        HttpSession session = request.getSession();
+        PrintWriter out = response.getWriter();
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String userType = "", fullName = "";
-        
-        String sqlQuery = "SELECT * FROM user WHERE login = ? AND password = ?";
-        
+
+        String sqlQuery = "SELECT * FROM user WHERE login = ?";
+
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(1, login); // get user by login only, no need for password
             ResultSet rs = preparedStatement.executeQuery();
-                rs.next();
+            while (rs.next()) {
+                String dbPasswordHash = rs.getString("password");
+                String salt = rs.getString("salt");
                 userType = rs.getString("usertype");
                 fullName = rs.getString("fullname");
-                
-                
-                
+
                 user.setLogin(login);
                 user.setFullName(fullName);
                 user.setUserType(userType);
-        }
-        catch (SQLException ex) {  
+                user.setPassword(dbPasswordHash);
+                user.setSalt(salt);
+            }
+        } catch (SQLException ex) {
             user = null;
             throw new ServletException("Register failed", ex);
         }
-        
+
         if (user != null) {
-            if("admin".equals(user.getUserType())){
-                session.setAttribute("adminloggedin", user);
-                response.sendRedirect(request.getContextPath() + "/admin.jsp");
+
+            String hash = DigestUtils.sha512Hex(password + user.getSalt());
+
+            //validate hash
+            if (hash.equals(user.getPassword())) {
+
+                if ("admin".equals(user.getUserType())) {
+                    session.setAttribute("adminloggedin", user);
+                    response.sendRedirect(request.getContextPath() + "/admin.jsp");
+                } else {
+                    session.setAttribute("clientloggedin", user);
+                    response.sendRedirect(request.getContextPath() + "/client.jsp");
+                }
+
+            } else {
+
+                //login correct but password is incorrect
+                out.println("<script>");
+                out.println("    alert('Login/Password incorrect');");
+                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("</script>");
             }
-            else{
-                session.setAttribute("clientloggedin", user);
-                response.sendRedirect(request.getContextPath() + "/client.jsp");
-            }
+
+        } else {
+            //user with that login not exist
+                out.println("<script>");
+                out.println("    alert('Login/Password incorrect');");
+                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("</script>");       
         }
-        else {
-            response.sendRedirect(request.getContextPath() + "/not-exist.html");
-        }            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -130,8 +143,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

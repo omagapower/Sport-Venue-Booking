@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author MSI
  */
 public class User implements Serializable {
-    private String login, password, userType, fullName;
+    private String login, password, userType, fullName, salt;
 
     /**
      * @return the login
@@ -40,6 +40,22 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    
+    /**
+     * @return the salt
+     */
+    public String getSalt() {
+        return salt;
+    }
+
+    /**
+     * @param salt the salt to set
+     */
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+    
 
     /**
      * @return the userType
