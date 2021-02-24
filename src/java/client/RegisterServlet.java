@@ -28,18 +28,17 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @author MSI
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-public class RegisterServlet extends HttpServlet {    
+public class RegisterServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
-    
+
     /**
      *
      * @throws ServletException
      */
     @Override
-    public void init() throws ServletException
-    {
+    public void init() throws ServletException {
         String driver = "com.mysql.jdbc.Driver";
 
         String dbName = "sportCenter";
@@ -48,18 +47,17 @@ public class RegisterServlet extends HttpServlet {
         String password = "";
 
         jdbcUtility = new JDBCUtility(driver,
-                                      url,
-                                      userName,
-                                      password);
+                url,
+                userName,
+                password);
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-    }        
+    }
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -68,83 +66,86 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        
+
         HttpSession session = request.getSession();
-        
+
         //get form data from VIEW > V-I
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confpassword");
         String fullName = request.getParameter("fullname");
-        String userType = "client";  
-        
-        
+        String userType = "client";
+        PrintWriter out = response.getWriter();
+
         //generate salt
-	int length = 30;
+        int length = 30;
         boolean useLetters = true;
         boolean useNumbers = true;
-        String salt = RandomStringUtils.random(length, useLetters, useNumbers);        
-        
+        String salt = RandomStringUtils.random(length, useLetters, useNumbers);
+
         //generate password hash
         String passwordHash = DigestUtils.sha512Hex(password + salt);
-        
-        
-        String sqlInsert = "INSERT INTO user(login, password, salt, userType, fullName) VALUES(?, ?, ?, ?, ?);"; 
-        
+
+        String sqlInsert = "INSERT INTO user(login, password, salt, userType, fullName) VALUES(?, ?, ?, ?, ?);";
+
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, passwordHash);
-            preparedStatement.setString(3, salt);
-            preparedStatement.setString(4, userType);
-            preparedStatement.setString(5, fullName);
-            
-            int insertStatus = 0;  
-            insertStatus = preparedStatement.executeUpdate();
-            
-            User user = new User();
-            
-            user.setLogin(login);
-            user.setFullName(fullName);
-            user.setPassword(passwordHash);
-            user.setSalt(salt);
-            user.setUserType(userType);
-            
-            PrintWriter out = response.getWriter();
-            
-            if (insertStatus == 1) {
+
+            if (password.equals(confirmPassword)) {
+                PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
+                preparedStatement.setString(1, login);
+                preparedStatement.setString(2, passwordHash);
+                preparedStatement.setString(3, salt);
+                preparedStatement.setString(4, userType);
+                preparedStatement.setString(5, fullName);
+
+                int insertStatus = 0;
+                insertStatus = preparedStatement.executeUpdate();
+
+                User user = new User();
+
+                user.setLogin(login);
+                user.setFullName(fullName);
+                user.setPassword(passwordHash);
+                user.setSalt(salt);
+                user.setUserType(userType);
+
+                if (insertStatus == 1) {
+                    out.println("<script>");
+                    out.println("    alert('Account created successfully');");
+                    out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                    out.println("</script>");
+                }
+            } else {
+                //if password and confirm password not the same
+
                 out.println("<script>");
-                out.println("    alert('Account created successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("    alert('Password and confirm password not similar, try again');");
+                out.println("    window.location = '/Sport-Venue-Booking/register.jsp'");
                 out.println("</script>");
+
             }
-        }
-        catch (SQLException ex) {   
-            throw new ServletException("Register failed", ex);
+
+        } catch (SQLException ex) {
+            
         }
     }
-    
-    void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException
-    {
-        // Get the dispatcher; it gets the main page to the user
-	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
 
-	if (dispatcher == null)
-	{
+    void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException {
+        // Get the dispatcher; it gets the main page to the user
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
+
+        if (dispatcher == null) {
             System.out.println("There was no dispatcher");
-	    // No dispatcher means the html file could not be found.
-	    res.sendError(res.SC_NO_CONTENT);
-	}
-	else
-	    dispatcher.forward(req, res);
-    }        
+            // No dispatcher means the html file could not be found.
+            res.sendError(res.SC_NO_CONTENT);
+        } else {
+            dispatcher.forward(req, res);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -157,8 +158,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
