@@ -99,13 +99,13 @@ public class LoginServlet extends HttpServlet {
         }
         
         if (user != null) {
-            if(user.getUserType()=="admin"){
+            if("admin".equals(user.getUserType())){
                 session.setAttribute("adminloggedin", user);
-                response.sendRedirect(request.getContextPath() + "/client.html");
+                response.sendRedirect(request.getContextPath() + "/admin.jsp");
             }
             else{
                 session.setAttribute("clientloggedin", user);
-                response.sendRedirect(request.getContextPath() + "/client.html");
+                response.sendRedirect(request.getContextPath() + "/client.jsp");
             }
         }
         else {

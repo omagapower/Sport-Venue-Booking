@@ -102,7 +102,7 @@ public class RegisterServlet extends HttpServlet {
             //sendRedirect doesn't recognise request object
             //only session
             session.setAttribute("clientloggedin", user);
-            response.sendRedirect(request.getContextPath() + "/client.html");
+            response.sendRedirect(request.getContextPath() + "/client.jsp");
         }
         catch (SQLException ex) {   
             throw new ServletException("Register failed", ex);
