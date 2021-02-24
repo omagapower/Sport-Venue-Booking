@@ -74,7 +74,7 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confpassword");
         String fullName = request.getParameter("fullname");
-        String userType = "client";
+        String userType = "client"; //change this to 'admin' to create an admin
         PrintWriter out = response.getWriter();
 
         //generate salt
