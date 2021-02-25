@@ -9,7 +9,7 @@ public class Court implements Serializable {
     private String name, location, picture;
     private double price;
 
- String getName() {
+    public String getName() {
         return name;
     }
 

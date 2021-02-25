@@ -5,7 +5,6 @@
 package admin;
 
 import bean.Court;
-import bean.CourtList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -26,8 +25,8 @@ import jdbc.JDBCUtility;
  *
  * @author MSI
  */
-@WebServlet(name = "DisplayCourtsServlet", urlPatterns = {"/DisplayCourtsServlet"})
-public class DisplayCourtsServlet extends HttpServlet {
+@WebServlet(name = "DeleteCourtServlet", urlPatterns = {"/DeleteCourtServlet"})
+public class DeleteCourtServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -70,59 +69,37 @@ public class DisplayCourtsServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         
-        CourtList list = new CourtList();
-        
-        String name="", location="", picture="default.jpg";
         int id;
-        double price;
+        id = Integer.parseInt(request.getParameter("id"));
 
-        String sqlInsert = "SELECT * FROM courts";
+        String sqlInsert = "DELETE FROM courts WHERE id = ?";
         
         
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
+            preparedStatement.setInt(1, id);
             
-            ResultSet rs = preparedStatement.executeQuery();
-            
-            while (rs.next()) {
-                
-                id = rs.getInt("id");
-                price = rs.getDouble("price");
-                name = rs.getString("name");
-                location = rs.getString("location");
-                picture = rs.getString("picture");
+            int insertStatus = 0;
+            insertStatus = preparedStatement.executeUpdate();
 
-                Court court = new Court();
-                court.setId(id);
-                court.setLocation(location);
-                court.setName(name);
-                court.setPrice(price);
-                court.setPicture(picture);
-                
-                list.setChild(court);
-                
+            if (insertStatus == 1) {
+                out.println("<script>");
+                out.println("    alert('Court Deleted Successfully');");
+                out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
+                out.println("</script>");
             }
+            
+            
+            
+                
+
 
         } catch (SQLException ex) {
             throw new ServletException("Failed to retrieve court data", ex);
         }
-        session.setAttribute("list", list);
         
         response.sendRedirect(request.getContextPath() + "/admin.jsp");
-    }
-    
-    void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException {
-        // Get the dispatcher; it gets the main page to the user
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
-
-        if (dispatcher == null) {
-            System.out.println("There was no dispatcher");
-            // No dispatcher means the html file could not be found.
-            res.sendError(res.SC_NO_CONTENT);
-        } else {
-            dispatcher.forward(req, res);
-        }
     }
 
 
@@ -165,5 +142,3 @@ public class DisplayCourtsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
-
-

@@ -5,6 +5,8 @@
 <%@ page import="bean.Court" %>
 <%@ page import="bean.CourtList" %>
 
+<jsp:useBean id="list" class="bean.CourtList" scope="session"/>
+
 
 <c:if test="${sessionScope.adminloggedin == null}">
     <% response.sendRedirect(request.getContextPath() + "/index.jsp"); %>
@@ -83,85 +85,28 @@
 						<table class="table table-striped">
 						  <thead>
 						    <tr>
-						      <th>Invoce</th>
-						      <th>Customer</th>
-						      <th>Ship</th>
-						      <th>Price</th>
-						      <th>Pruchased Price</th>
-						      <th>Status</th>
+						      <th>Court Name</th>
+						      <th>Location</th>
+						      <th>Price/hour</th>
+                                                      <th></th>
+						      <th>Update</th>
+						      <th>Delete</th>
 						    </tr>
 						  </thead>
 						  <tbody>
+                                                    <c:forEach var="v" begin="0" items="${list.list}">
+                                                        <c:if test="${not empty v.name}">
 						    <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-success">Progress</a></td>
-						    </tr>
-
-						    <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-warning">Open</a></td>
-						    </tr>
-
-						    <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-danger">On hold</a></td>
-						    </tr>
-
-						    <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-success">Progress</a></td>
-						    </tr>
-
-						     <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-danger">On hold</a></td>
-						    </tr>
-
-						     <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-warning">Open</a></td>
-
-						       <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-warning">Open</a></td>
-						    </tr>
-
-						    <tr>
-						      <th scope="row">1001</th>
-						      <td>Mark Otto</td>
-						      <td>Japan</td>
-						      <td>$3000</td>
-						      <td>$1200</td>
-						      <td><a href="#" class="btn btn-success">Progress</a></td>
-						    </tr>
+						      <td><c:out value="${v.name}" /></td>
+						      <td><c:out value="${v.location}" /></td>
+						      <td>RM<c:out value="${v.price}" />/hour</td>
+                                                      <td></td>
+						      <td><a href="updateCourt.jsp?id=${v.id}" class="btn btn-success">Update</a></td>
+						      <td><a href="DeleteCourtServlet?id=${v.id}" class="btn btn-success">Delete</a></td>
+                                                    </tr>
+                                                        </c:if>
+                                                    </c:forEach >
+                                                    
 						  </tbody>
 						</table>
 					</div>
