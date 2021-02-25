@@ -103,7 +103,7 @@ public class LoginServlet extends HttpServlet {
 
                 if ("admin".equals(user.getUserType())) {
                     session.setAttribute("adminloggedin", user);
-                    response.sendRedirect(request.getContextPath() + "/admin.jsp");
+                    response.sendRedirect("DisplayCourtsServlet");
                 } else {
                     session.setAttribute("clientloggedin", user);
                     response.sendRedirect(request.getContextPath() + "/client.jsp");

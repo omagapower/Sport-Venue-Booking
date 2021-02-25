@@ -2,7 +2,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="bean.User" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="bean.Court" %>
+<%@ page import="bean.CourtList" %>
 
 
 <c:if test="${sessionScope.adminloggedin == null}">
@@ -25,6 +26,10 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,400,600,900&subset=latin-ext" rel="stylesheet"> 
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.min.js"></script>      
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+     
   </head>
 
   <body class="size-1140">
@@ -58,183 +63,117 @@
       <main role="main">
         <!-- Content -->
         <article>
-          <header class="section background-white">
+            <br><br>
             <div class="line text-center">        
               <h1 class="text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1">Court Management</h1><br>
                             <div class="s-12"><button onclick="window.location.href='addCourt.jsp'" class="s-12 submit-form button background-primary text-white">Add Court</button></div>
             </div> 
-              
-          </header>
+            <br><br>
           <div class="background-white full-width"> 
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-01.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-02.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>                  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-03.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-04.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-05.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-06.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-07.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-08.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-09.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-10.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-11.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-12.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-01.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-02.jpg" alt=""/>
-              </a>	
-            </div>
-            <div class="s-12 m-6 l-five">
-              <a class="image-with-hover-overlay image-hover-zoom" href="/" title="Portfolio Image">
-                <div class="image-hover-overlay background-primary"> 
-                  <div class="image-hover-overlay-content text-center padding-2x">
-                    <h3 class="text-white text-size-20 margin-bottom-10">Reference Title</h3>
-                    <p class="text-white text-size-14 margin-bottom-20">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>  
-                  </div> 
-                </div> 
-                <img class="full-img" src="img/portfolio/thumb-03.jpg" alt=""/>
-              </a>	
-            </div>
+              <div class="line text-center"> 
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Courts</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-striped">
+						  <thead>
+						    <tr>
+						      <th>Invoce</th>
+						      <th>Customer</th>
+						      <th>Ship</th>
+						      <th>Price</th>
+						      <th>Pruchased Price</th>
+						      <th>Status</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-success">Progress</a></td>
+						    </tr>
+
+						    <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-warning">Open</a></td>
+						    </tr>
+
+						    <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-danger">On hold</a></td>
+						    </tr>
+
+						    <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-success">Progress</a></td>
+						    </tr>
+
+						     <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-danger">On hold</a></td>
+						    </tr>
+
+						     <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-warning">Open</a></td>
+
+						       <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-warning">Open</a></td>
+						    </tr>
+
+						    <tr>
+						      <th scope="row">1001</th>
+						      <td>Mark Otto</td>
+						      <td>Japan</td>
+						      <td>$3000</td>
+						      <td>$1200</td>
+						      <td><a href="#" class="btn btn-success">Progress</a></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
           </div>  
+          </div>
         </article>
       </main>
       
+      <br><br>
       <!-- FOOTER -->
       <footer>
         <!-- Contact Us -->
@@ -246,38 +185,6 @@
         </div>
 
         <!-- Main Footer -->
-        <section class="section-small-padding text-center background-dark full-width">
-          <div class="line">
-            <div class="margin">
-              <!-- Collumn 1 -->              
-              <div class="s-12 m-12 l-4 margin-m-bottom-30">
-                <h3 class="text-size-16">Company Address</h3>
-                <p class="text-size-14">
-                   Responsive Street 7<br>
-                   London - United Kingdom<br> 
-                   Europe
-                </p>               
-              </div>
-              <!-- Collumn 2 -->
-              <div class="s-12 m-12 l-4 margin-m-bottom-30">
-                <h3 class="text-size-16">E-mail</h3>
-                <p class="text-size-14">
-                   contact@sampledomain.com<br>
-                   office@sampledomain.com
-                </p>              
-              </div>
-              <!-- Collumn 3 -->
-              <div class="s-12 m-12 l-4 ">
-                <h3 class="text-size-16">Phone Numbers</h3>
-                <p class="text-size-14">
-                   0800 4521 800 50<br>
-                   0450 5896 625 16<br>
-                   0798 6546 465 15
-                </p>             
-              </div>
-            </div>
-          </div>  
-        </section>
         <hr class="break margin-top-bottom-0" style="border-color: rgba(0, 0, 0, 0.80);">
         
         <!-- Bottom Footer -->
@@ -293,5 +200,10 @@
     <script type="text/javascript" src="js/jquery.events.touch.js"></script>
     <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
     <script type="text/javascript" src="js/template-scripts.js"></script> 
+    <script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+    
   </body>
 </html>

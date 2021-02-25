@@ -4,8 +4,8 @@
  */
 package admin;
 
-import bean.User;
-import java.io.*;
+import bean.Court;
+import bean.CourtList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -20,15 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.codec.digest.DigestUtils;
+
 
 /**
  *
  * @author MSI
  */
-@WebServlet(name = "AddCourtServlet", urlPatterns = {"/AddCourtServlet"})
-public class AddCourtServlet extends HttpServlet {
+@WebServlet(name = "DisplayCourtsServlet", urlPatterns = {"/DisplayCourtsServlet"})
+public class DisplayCourtsServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -69,48 +68,49 @@ public class AddCourtServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        //get form data from VIEW > V-I
-        String name = request.getParameter("name");
-        String location = request.getParameter("location");
-        double price = Double.parseDouble(request.getParameter("price"));
-        String picture = "default.jpg";
         PrintWriter out = response.getWriter();
+        
+        CourtList list = new CourtList();
+        
+        String name="", location="", picture="default.jpg";
+        int id;
+        double price;
 
-        String sqlInsert = "INSERT INTO courts(name, location, price, picture) VALUES(?, ?, ?, ?);";
+        String sqlInsert = "SELECT * FROM courts";
+        
+        
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, location);
-            preparedStatement.setDouble(3, price);
-            preparedStatement.setString(4, picture);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+                
+                id = rs.getInt("id");
+                price = rs.getDouble("price");
+                name = rs.getString("name");
+                location = rs.getString("location");
+                picture = rs.getString("picture");
 
-            int insertStatus = 0;
-            insertStatus = preparedStatement.executeUpdate();
-
-            if (insertStatus == 1) {
-                out.println("<script>");
-                out.println("    alert('Court Added Successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
-                out.println("</script>");
+                Court court = new Court();
+                court.setId(id);
+                court.setLocation(location);
+                court.setName(name);
+                court.setPrice(price);
+                court.setPicture(picture);
+                
+                list.setChild(court);
+                
             }
+
         } catch (SQLException ex) {
-
+            throw new ServletException("Failed to retrieve court data", ex);
         }
+        session.setAttribute("list", list);
+        response.sendRedirect(request.getContextPath() + "/admin.jsp");
     }
 
-    void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException {
-        // Get the dispatcher; it gets the main page to the user
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
-
-        if (dispatcher == null) {
-            System.out.println("There was no dispatcher");
-            // No dispatcher means the html file could not be found.
-            res.sendError(res.SC_NO_CONTENT);
-        } else {
-            dispatcher.forward(req, res);
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -124,6 +124,7 @@ public class AddCourtServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -150,3 +151,5 @@ public class AddCourtServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
+
+
