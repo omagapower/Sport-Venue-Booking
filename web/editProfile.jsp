@@ -76,6 +76,8 @@
                   <div class="margin">
                       <input type="hidden" name="oldlogin" value="<jsp:getProperty name="clientloggedin" property="login"/>">
                       <input type="hidden" name="userType" value="<jsp:getProperty name="clientloggedin" property="userType"/>">
+                      <input type="hidden" name="oldPassword" value="<jsp:getProperty name="clientloggedin" property="password"/>">
+                      <input type="hidden" name="salt" value="<jsp:getProperty name="clientloggedin" property="salt"/>">
                     <div class="s-12 m-12 l-6">
                       <input name="login" class="required email" title="login" type="text" value="<jsp:getProperty name="clientloggedin" property="login"/>">
                     </div>

@@ -70,7 +70,9 @@ public class EditProfile extends HttpServlet {
 
         String login = request.getParameter("oldlogin");
         String newlogin = request.getParameter("login");
+        String oldPassword = request.getParameter("oldPassword");
         String newpassword = request.getParameter("password");
+        String oldSalt = request.getParameter("salt");
         String confirmPassword = request.getParameter("confpassword");
         String fullName = request.getParameter("fullName");
         String userType = request.getParameter("userType");
@@ -79,9 +81,20 @@ public class EditProfile extends HttpServlet {
         int length = 30;
         boolean useLetters = true;
         boolean useNumbers = true;
-
-        String salt = RandomStringUtils.random(length, useLetters, useNumbers);
-        String passwordHash = DigestUtils.sha512Hex(newpassword + salt);
+        String salt;
+        String passwordHash;
+        
+        
+        if("".equals(newpassword)){
+            
+            salt = oldSalt;
+            passwordHash = oldPassword;
+        }
+        else{
+            salt = RandomStringUtils.random(length, useLetters, useNumbers);
+            passwordHash = DigestUtils.sha512Hex(newpassword + salt);
+        }
+        
 
         String sqlQuery = "UPDATE user SET login = ?, password = ?, fullName = ?, salt = ? WHERE login = ?";
 
