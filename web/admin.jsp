@@ -60,10 +60,10 @@
         <article>
           <header class="section background-white">
             <div class="line text-center">        
-              <h1 class="text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1">Be More with Less</h1>
-              <p class="margin-bottom-0 text-size-16 text-dark">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.<br>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>
-            </div>  
+              <h1 class="text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1">Court Management</h1><br>
+                            <div class="s-12"><button onclick="window.location.href='addCourt.jsp'" class="s-12 submit-form button background-primary text-white">Add Court</button></div>
+            </div> 
+              
           </header>
           <div class="background-white full-width"> 
             <div class="s-12 m-6 l-five">
