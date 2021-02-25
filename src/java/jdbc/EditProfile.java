@@ -22,8 +22,6 @@ import jdbc.JDBCUtility;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
-
-
 /**
  *
  * @author MSI
@@ -67,18 +65,16 @@ public class EditProfile extends HttpServlet {
         //Get the session object
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
-        
+
         User user = new User();
-        
-        
+
         String login = request.getParameter("oldlogin");
         String newlogin = request.getParameter("login");
         String newpassword = request.getParameter("password");
+        String confirmPassword = request.getParameter("confpassword");
         String fullName = request.getParameter("fullName");
         String userType = request.getParameter("userType");
-        
-        
-        
+
         //generate salt
         int length = 30;
         boolean useLetters = true;
@@ -87,57 +83,69 @@ public class EditProfile extends HttpServlet {
         String salt = RandomStringUtils.random(length, useLetters, useNumbers);
         String passwordHash = DigestUtils.sha512Hex(newpassword + salt);
 
-        
         String sqlQuery = "UPDATE user SET login = ?, password = ?, fullName = ?, salt = ? WHERE login = ?";
 
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, newlogin); 
-            preparedStatement.setString(2, passwordHash);
-            preparedStatement.setString(3, fullName);
-            preparedStatement.setString(4, salt);
-            preparedStatement.setString(5, login);// get user by login only, no need for password
-            
-            int insertStatus = 0;
-            insertStatus = preparedStatement.executeUpdate();
-            
 
-            user.setLogin(login);
-            user.setFullName(fullName);
-            user.setPassword(passwordHash);
-            user.setSalt(salt);
-            user.setUserType(userType);
-            
-            if (insertStatus == 1) {
+            if (newpassword.equals(confirmPassword)) {
+
+                PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
+                preparedStatement.setString(1, newlogin);
+                preparedStatement.setString(2, passwordHash);
+                preparedStatement.setString(3, fullName);
+                preparedStatement.setString(4, salt);
+                preparedStatement.setString(5, login);// get user by login only, no need for password
+
+                int insertStatus = 0;
+                insertStatus = preparedStatement.executeUpdate();
+                if (insertStatus == 1) {
+                    user.setLogin(newlogin);
+                    user.setFullName(fullName);
+                    user.setPassword(passwordHash);
+                    user.setSalt(salt);
+                    user.setUserType(userType);
+
+                    if ("admin".equals(user.getUserType())) {
+                        session.setAttribute("adminloggedin", user);
+
+                    } else {
+                        session.setAttribute("clientloggedin", user);
+
+                    }
+
                     out.println("<script>");
                     out.println("    alert('Update successful');");
+                    out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
                     out.println("</script>");
+
+                } else {
+                    //if password and confirm password not the same
+
+                    out.println("<script>");
+                    out.println("    alert('Error updating data');");
+                    out.println("</script>");
+
                 }
-                else {
+            } else {
                 //if password and confirm password not the same
 
                 out.println("<script>");
-                out.println("    alert('Error updating data');");
-                out.println("</script>");
+                out.println("    alert('Password and confirm password not similar, try again');");
 
+                if ("admin".equals(userType)) {
+                    out.println("    window.location = '/Sport-Venue-Booking/editProfileAdmin.jsp'");
+                } else {
+                    out.println("    window.location = '/Sport-Venue-Booking/editProfile.jsp'");
+                }
+
+                out.println("</script>");
             }
-            
-            
+
         } catch (SQLException ex) {
             user = null;
             throw new ServletException("Update failed", ex);
         }
 
-        if (user != null) {
-            if ("admin".equals(user.getUserType())) {
-                session.setAttribute("adminloggedin", user);
-                response.sendRedirect(request.getContextPath() + "/admin.jsp");
-            }else {
-                session.setAttribute("clientloggedin", user);
-                response.sendRedirect(request.getContextPath() + "/client.jsp");
-            }
-
-         } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
