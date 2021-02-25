@@ -7,11 +7,11 @@
 
 
 
-<c:if test="${sessionScope.clientloggedin == null}">
+<c:if test="${sessionScope.adminloggedin == null}">
     <% response.sendRedirect(request.getContextPath() + "/index.jsp"); %>
 </c:if>
 
-<jsp:useBean id="clientloggedin" class="bean.User" scope="session" />
+<jsp:useBean id="adminloggedin" class="bean.User" scope="session" />
 
 
 
@@ -53,7 +53,7 @@
               <p class="nav-text"></p>
               <ul class="right chevron">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="editProfile.jsp">Edit Profile</a></li>             
+                <li><a href="editProfileAdmin.jsp">Edit Profile</a></li>             
                 <li><a href="logout.jsp">Logout</a></li>
               </ul>
             </div>
@@ -71,16 +71,16 @@
           <section class="section background-white">
             <div class="s-12 m-12 l-4 center">
               <h4 class="text-size-20 margin-bottom-20 text-dark text-center">Edit Profile</h4>
-              <form action="EditProfileServlet"  name="editProfile" class="customform" method="post">
+              <form action="EditProfileServlet" name="editProfile" class="customform" method="post">
                 <div class="s-12">
                   <div class="margin">
-                      <input type="hidden" name="oldlogin" value="<jsp:getProperty name="clientloggedin" property="login"/>">
-                      <input type="hidden" name="userType" value="<jsp:getProperty name="clientloggedin" property="userType"/>">
+                      <input type="hidden" name="oldlogin" value="<jsp:getProperty name="adminloggedin" property="login"/>">
+                      <input type="hidden" name="userType" value="<jsp:getProperty name="adminloggedin" property="userType"/>">
                     <div class="s-12 m-12 l-6">
-                      <input name="login" class="required email" title="login" type="text" value="<jsp:getProperty name="clientloggedin" property="login"/>">
+                      <input name="login" class="required email" title="login" type="text" value="<jsp:getProperty name="adminloggedin" property="login"/>">
                     </div>
                     <div class="s-12 m-12 l-6">
-                      <input name="fullName" class="name" title="Your name" type="text" value="<jsp:getProperty name="clientloggedin" property="fullName"/>">
+                      <input name="fullName" class="name" title="Your name" type="text" value="<jsp:getProperty name="adminloggedin" property="fullName"/>">
                     </div>
                   </div>
                 </div>

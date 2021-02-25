@@ -46,7 +46,7 @@
               <p class="nav-text"></p>
               <ul class="right chevron">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="editProfile.jsp">Edit Profile</a></li>             
+                <li><a href="editProfileAdmin.jsp">Edit Profile</a></li>             
                 <li><a href="logout.jsp">Logout</a></li>
               </ul>
             </div>
