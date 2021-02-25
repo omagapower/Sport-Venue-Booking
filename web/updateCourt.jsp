@@ -70,23 +70,32 @@
                     </div>  
                     <br><br><br>
                     <div class="s-12 m-12 l-4 center">
-                        <form action="UpdateCourtServlet" name="UpdateCourt" class="customform" method="post">
-                            <div class="s-12">
-                            </div>
-                             <% int id = Integer.parseInt(request.getParameter("id")); %>
-                                <c:forEach var="v" begin="0" items="${list.list}">
-                                   <c:if test="${id == v.name}">
-                                       
+
+                        <%
+                            int id = Integer.parseInt(request.getParameter("id"));
+                            session.setAttribute("id", id);
+                        %>
+                        
+                        <c:set var="id" value="${sessionScope.id}"/>
+                        
+                        <c:forEach var="v" begin="0" items="${list.list}">
+                            <c:if test="${v.id == id}">
+                                <form action="UpdateCourtServlet" name="UpdateCourt" class="customform" method="post">
+                                    <div class="s-12">
+                                    </div>
 
 
-                                        <input type="hidden" name="oldName" value="${v.name}">
-                                        <input type="hidden" name="oldLocation" value="${v.location}">
-                                        <input type="hidden" name="oldPrice" value="${v.price}">
 
 
-                                        <input name="name" class="subject" placeholder="Court Name" title="name" type="text" value="${v.name}">
-                                    
-                                    <br><br><br><br>
+
+                                    <input type="hidden" name="oldName" value="${v.name}">
+                                    <input type="hidden" name="oldLocation" value="${v.location}">
+                                    <input type="hidden" name="oldPrice" value="${v.price}">
+
+
+                                    <input name="name" class="subject" placeholder="Court Name" title="name" type="text" value="${v.name}">
+
+                                    <br><br>
                                     <div class="s-12"> 
                                         <input name="location" class="subject" placeholder="Location" title="location" type="text" value="${v.location}">
                                     </div>
@@ -98,38 +107,40 @@
 
 
                                     <div class="s-12"><button class="s-12 submit-form button background-primary text-white" type="submit">Update Court</button></div>
-                                    </c:if>
-                                </c:forEach>
-                                    
-                                    </form>
-                            </div>           
 
-                        </article>
-                    </main>
-                    <br><br><br><br>
-                    <!-- FOOTER -->
-                    <footer>
-                        <!-- Contact Us -->
-                        <div class="background-dark padding text-center footer-social">
-                            <a class="margin-right-10" target="_blank" href="https://www.facebook.com"><i class="icon-facebook_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">FACEBOOK</span></a>
-                            <a class="margin-right-10" target="_blank" href="https://www.twitter.com"><i class="icon-twitter_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">TWITTER</span></a>
-                            <a class="margin-right-10" target="_blank" href="https://www.instagram.com"><i class="icon-instagram_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">INSTAGRAM</span></a>
-                            <a target="_blank" href="https://www.linkedin.com"><i class="icon-linked_in_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">LINKEDIN</span></a>                                                                         
-                        </div>
 
-                        <hr class="break margin-top-bottom-0" style="border-color: rgba(0, 0, 0, 0.80);">
+                                </form>
 
-                        <!-- Bottom Footer -->
-                        <section class="padding background-dark full-width">
-                            <div class="text-center">
-                                <p class="text-size-12">Copyright 2019, Vision Design - graphic zoo</p>
-                            </div>
-                        </section>
-                    </footer>
+                            </c:if>
+                        </c:forEach>
+                    </div>           
+
+                </article>
+            </main>
+            <br><br><br><br>
+            <!-- FOOTER -->
+            <footer>
+                <!-- Contact Us -->
+                <div class="background-dark padding text-center footer-social">
+                    <a class="margin-right-10" target="_blank" href="https://www.facebook.com"><i class="icon-facebook_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">FACEBOOK</span></a>
+                    <a class="margin-right-10" target="_blank" href="https://www.twitter.com"><i class="icon-twitter_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">TWITTER</span></a>
+                    <a class="margin-right-10" target="_blank" href="https://www.instagram.com"><i class="icon-instagram_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">INSTAGRAM</span></a>
+                    <a target="_blank" href="https://www.linkedin.com"><i class="icon-linked_in_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">LINKEDIN</span></a>                                                                         
                 </div>
-                <script type="text/javascript" src="js/responsee.js"></script>
-                <script type="text/javascript" src="js/jquery.events.touch.js"></script>
-                <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
-                <script type="text/javascript" src="js/template-scripts.js"></script> 
-            </body>
-        </html>
+
+                <hr class="break margin-top-bottom-0" style="border-color: rgba(0, 0, 0, 0.80);">
+
+                <!-- Bottom Footer -->
+                <section class="padding background-dark full-width">
+                    <div class="text-center">
+                        <p class="text-size-12">Copyright 2019, Vision Design - graphic zoo</p>
+                    </div>
+                </section>
+            </footer>
+        </div>
+        <script type="text/javascript" src="js/responsee.js"></script>
+        <script type="text/javascript" src="js/jquery.events.touch.js"></script>
+        <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
+        <script type="text/javascript" src="js/template-scripts.js"></script> 
+    </body>
+</html>

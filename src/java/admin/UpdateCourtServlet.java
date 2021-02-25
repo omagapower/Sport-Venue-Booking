@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jdbc;
+package admin;
 
 import bean.Court;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import org.apache.commons.lang3.RandomStringUtils;
  *
  * @author MSI
  */
-@WebServlet(name = "UpdateServlet", urlPatterns = {"/UpdateServlet"})
+@WebServlet(name = "UpdateCourtServlet", urlPatterns = {"/UpdateCourtServlet"})
 public class UpdateCourtServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
@@ -66,7 +66,6 @@ public class UpdateCourtServlet extends HttpServlet {
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
 
-        Court court = new Court();
 
         String oldName = request.getParameter("oldName");
         String newName = request.getParameter("name");
@@ -79,7 +78,7 @@ public class UpdateCourtServlet extends HttpServlet {
         
         
 
-        String sqlQuery = "UPDATE court SET name = ?, location = ?, price = ? WHERE name = ? AND location = ? AND price = ?";
+        String sqlQuery = "UPDATE courts SET name = ?, location = ?, price = ? WHERE name = ? AND location = ? AND price = ?";
 
         try {
 
@@ -91,14 +90,11 @@ public class UpdateCourtServlet extends HttpServlet {
                 preparedStatement.setDouble(3, newPrice);
                 preparedStatement.setString(4, oldName);
                 preparedStatement.setString(5, oldLocation);
-                preparedStatement.setString(5, oldPrice);
+                preparedStatement.setString(6, oldPrice);
 
                 int insertStatus = 0;
                 insertStatus = preparedStatement.executeUpdate();
                 if (insertStatus == 1) {
-                    court.setName(newName);
-                    court.setLocation(newLocation);
-                    court.setPrice(newPrice);
                     
                     
                     out.println("<script>");
@@ -117,7 +113,6 @@ public class UpdateCourtServlet extends HttpServlet {
             
 
         } catch (SQLException ex) {
-            court = null;
             throw new ServletException("Update failed", ex);
         }
 

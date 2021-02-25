@@ -81,14 +81,23 @@ public class DeleteCourtServlet extends HttpServlet {
             preparedStatement.setInt(1, id);
             
             int insertStatus = 0;
-            insertStatus = preparedStatement.executeUpdate();
+                insertStatus = preparedStatement.executeUpdate();
+                if (insertStatus == 1) {
 
-            if (insertStatus == 1) {
-                out.println("<script>");
-                out.println("    alert('Court Deleted Successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
-                out.println("</script>");
-            }
+                    
+                    out.println("<script>");
+                    out.println("    alert('Court Deleted successfully');");
+                    out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
+                    out.println("</script>");
+
+                } else {
+                   
+
+                    out.println("<script>");
+                    out.println("    alert('Error updating data');");
+                    out.println("</script>");
+
+                }
             
             
             
@@ -99,8 +108,9 @@ public class DeleteCourtServlet extends HttpServlet {
             throw new ServletException("Failed to retrieve court data", ex);
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin.jsp");
     }
+    
+    
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

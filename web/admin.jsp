@@ -95,7 +95,7 @@
 						  </thead>
 						  <tbody>
                                                     <c:forEach var="v" begin="0" items="${list.list}">
-                                                        <c:if test="${not empty v.name}">
+                                                        <c:if test="${not empty v.id}">
 						    <tr>
 						      <td><c:out value="${v.name}" /></td>
 						      <td><c:out value="${v.location}" /></td>
