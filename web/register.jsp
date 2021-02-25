@@ -61,6 +61,9 @@
                 <label for="confpassword">Confirm Password</label>
                 <input type="password" class="form-control" placeholder="Confirm Password" id="confpassword" name="confpassword">
               </div>
+                <div class="d-flex mb-5 align-items-center">
+                <span class="ml-auto"><a href="index.jsp" class="forgot-pass">Already got an account?</a></span> 
+               </div>
               
 
               <input type="submit" value="Register" class="btn btn-block btn-primary">

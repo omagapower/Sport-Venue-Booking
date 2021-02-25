@@ -1,9 +1,23 @@
-<!DOCTYPE html>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="bean.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<c:if test="${sessionScope.clientloggedin == null}">
+    <c:if test="${sessionScope.adminloggedin == null}">
+    <% response.sendRedirect(request.getContextPath() + "/index.jsp"); %>
+    </c:if>
+</c:if>
+
+
+
 <html lang="en-US">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minimalista - New Amazing HTML5 Template</title>
+    <title>Edit Profile</title>
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/responsee.css">
@@ -18,9 +32,7 @@
   </head>
 
   <body class="size-1140">
-  	<!-- PREMIUM FEATURES BUTTON -->
-  	<a target="_blank" class="hide-s" href="../template/minimalista-premium-responsive-business-template/" style="position:fixed;top:120px;right:-14px;z-index:10;"><img src="img/premium-features.png" alt=""></a>    
-    <div id="page-wrapper">
+  	    <div id="page-wrapper">
       <!-- HEADER -->
       <header role="banner" class="position-absolute margin-top-30 margin-m-top-0 margin-s-top-0">    
         <!-- Top Navigation -->
@@ -38,8 +50,8 @@
               <p class="nav-text"></p>
               <ul class="right chevron">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>             
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="editProfile.jsp">Edit Profile</a></li>             
+                <li><a href="logout.jsp">Logout</a></li>
               </ul>
             </div>
           </div>  
@@ -50,63 +62,31 @@
       <main role="main">
         <!-- Content -->
         <article>
-          <header class="section background-white">
             <div class="line text-center">        
-              <h1 class="text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1">Contact Us</h1>
-              <p class="margin-bottom-0 text-size-16 text-dark">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.<br>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod.</p>
+              <h1 class="text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1">Edit Profile</h1>
             </div>  
-          </header>
-          <section class="full-width background-dark">
-            <div class="s-12 m-12 l-6">
-              <!-- Change the background image -->  
-              <div style="background-image: url(img/img-contact.jpg);" class="contact-image" ></div>
-            </div>
-            <div class="s-12 m-12 l-6 text-center">
-              <div class="padding-2x">
-                <i class="icon-sli-location-pin text-white text-size-30 center"></i>
-                <h2 class="text-size-20 margin-bottom-0 text-white">Company Address</h2>                
-                <p>Aviation Way 99</p>
-                <p>Los Angeles</p>
-                <p>USA</p>
-                <i class="icon-sli-envelope text-white text-size-30 center margin-top-20"></i>
-                <h2 class="text-size-20 margin-bottom-0 text-white">E-mail</h2>                
-                <a class="text-primary-hover" href="mailto:contact@sampledomain.com">contact@sampledomain.com</a><br>
-                <a class="text-primary-hover" href="mailto:office@sampledomain.com">office@sampledomain.com</a>
-                <i class="icon-sli-earphones-alt text-white text-size-30 center margin-top-20"></i>
-                <h2 class="text-size-20 margin-bottom-0 text-white">Phone Numbers</h2>                
-                <p>0800 4521 800 50</p>
-                <p>0450 5896 625 16</p>
-                <p>0798 6546 465 </p>
-              </div>
-            </div>
-          </section>
-          
           <section class="section background-white">
             <div class="s-12 m-12 l-4 center">
-              <h4 class="text-size-20 margin-bottom-20 text-dark text-center">Contact Us</h4>
-              <form name="contactForm" class="customform" method="post">
+              <h4 class="text-size-20 margin-bottom-20 text-dark text-center">Edit Profile</h4>
+              <form name="editProfile" class="customform" method="post">
                 <div class="s-12">
                   <div class="margin">
                     <div class="s-12 m-12 l-6">
-                      <input name="email" class="required email" placeholder="Your e-mail" title="Your e-mail" type="text">
-                      <p class="email-error form-error">Please enter your e-mail.</p>
+                      <input name="login" class="required email" title="login" type="text" value="">
                     </div>
                     <div class="s-12 m-12 l-6">
-                      <input name="name" class="name" placeholder="Your name" title="Your name" type="text">
-                      <p class="name-error form-error">Please enter your name.</p>
+                      <input name="fullname" class="name" title="Your name" type="text" value="">
                     </div>
                   </div>
                 </div>
                 <div class="s-12"> 
-                  <input name="subject" class="subject" placeholder="Subject" title="Subject" type="text">
-                  <p class="subject-error form-error">Please enter the subject.</p>
+                  <input name="password" class="subject" placeholder="new password" title="password" type="password" >
                 </div>
-                <div class="s-12">
-                  <textarea name="message" class="required message" placeholder="Your message" rows="3"></textarea>
-                  <p class="message-error form-error">Please enter your message.</p>
+                  <div class="s-12"> 
+                  <input name="confpassword" class="subject" placeholder="confirm new password" title="confpassword" type="password" >
                 </div>
-                <div class="s-12"><button class="s-12 submit-form button background-primary text-white" type="submit">Submit Button</button></div>
+
+                <div class="s-12"><button class="s-12 submit-form button background-primary text-white" type="submit">Edit Profile</button></div>
               </form>
             </div>           
           </section> 
