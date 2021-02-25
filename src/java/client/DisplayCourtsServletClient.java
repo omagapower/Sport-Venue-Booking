@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jdbc;
+package client;
 
-import bean.User;
+import admin.*;
+import bean.Court;
+import bean.CourtList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,18 +21,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
-import org.apache.commons.codec.digest.DigestUtils;
+
 
 /**
  *
  * @author MSI
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "DisplayCourtsServletC", urlPatterns = {"/DisplayCourtsServletC"})
+public class DisplayCourtsServletClient extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
 
+    /**
+     *
+     * @throws ServletException
+     */
+    @Override
     public void init() throws ServletException {
         String driver = "com.mysql.jdbc.Driver";
 
@@ -46,7 +53,6 @@ public class LoginServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-
     }
 
     /**
@@ -61,73 +67,65 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        User user = new User();
-
-        //Get the session object
         HttpSession session = request.getSession();
+
         PrintWriter out = response.getWriter();
+        
+        CourtList list = new CourtList();
+        
+        String name="", location="", picture="default.jpg";
+        int id;
+        double price;
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String userType = "", fullName = "";
-
-        String sqlQuery = "SELECT * FROM user WHERE login = ?";
+        String sqlInsert = "SELECT * FROM courts";
+        
+        
 
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, login); // get user by login only, no need for password
+            PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
+            
             ResultSet rs = preparedStatement.executeQuery();
+            
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String dbPasswordHash = rs.getString("password");
-                String salt = rs.getString("salt");
-                userType = rs.getString("usertype");
-                fullName = rs.getString("fullname");
+                
+                id = rs.getInt("id");
+                price = rs.getDouble("price");
+                name = rs.getString("name");
+                location = rs.getString("location");
+                picture = rs.getString("picture");
 
-                user.setId(id);
-                user.setLogin(login);
-                user.setFullName(fullName);
-                user.setUserType(userType);
-                user.setPassword(dbPasswordHash);
-                user.setSalt(salt);
+                Court court = new Court();
+                court.setId(id);
+                court.setLocation(location);
+                court.setName(name);
+                court.setPrice(price);
+                court.setPicture(picture);
+                
+                list.setChild(court);
+                
             }
+
         } catch (SQLException ex) {
-            user = null;
-            throw new ServletException("Login failed", ex);
+            throw new ServletException("Failed to retrieve court data", ex);
         }
+        session.setAttribute("list", list);
+        
+        response.sendRedirect(request.getContextPath() + "/client.jsp");
+    }
+    
+    void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException {
+        // Get the dispatcher; it gets the main page to the user
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
 
-        if (user != null) {
-
-            String hash = DigestUtils.sha512Hex(password + user.getSalt());
-
-            //validate hash
-            if (hash.equals(user.getPassword())) {
-
-                if ("admin".equals(user.getUserType())) {
-                    session.setAttribute("adminloggedin", user);
-                    response.sendRedirect("DisplayCourtsServlet");
-                } else {
-                    session.setAttribute("clientloggedin", user);
-                    response.sendRedirect("DisplayCourtsServletC");
-                }
-
-            } else {
-
-                //login correct but password is incorrect
-                out.println("<script>");
-                out.println("    alert('Login/Password incorrect');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
-                out.println("</script>");
-            }
-
+        if (dispatcher == null) {
+            System.out.println("There was no dispatcher");
+            // No dispatcher means the html file could not be found.
+            res.sendError(res.SC_NO_CONTENT);
         } else {
-            //user with that login not exist
-                out.println("<script>");
-                out.println("    alert('Login/Password incorrect');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
-                out.println("</script>");       
+            dispatcher.forward(req, res);
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -168,3 +166,5 @@ public class LoginServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
+
+

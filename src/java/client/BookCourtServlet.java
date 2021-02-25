@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jdbc;
+package admin;
 
 import bean.User;
+import java.io.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,18 +20,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
  * @author MSI
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "BookCourtServlet", urlPatterns = {"/BookCourtServlet"})
+public class BookCourtServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
 
+    /**
+     *
+     * @throws ServletException
+     */
+    @Override
     public void init() throws ServletException {
         String driver = "com.mysql.jdbc.Driver";
 
@@ -46,7 +53,6 @@ public class LoginServlet extends HttpServlet {
 
         jdbcUtility.jdbcConnect();
         con = jdbcUtility.jdbcGetConnection();
-
     }
 
     /**
@@ -61,71 +67,56 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        User user = new User();
-
-        //Get the session object
         HttpSession session = request.getSession();
+        
         PrintWriter out = response.getWriter();
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String userType = "", fullName = "";
+        //get form data from VIEW > V-I
+        int courtId = Integer.parseInt(request.getParameter("courtId"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        String starth = request.getParameter("starth");
+        String startm = request.getParameter("startm");
+        String endh = request.getParameter("endh");
+        String endm = request.getParameter("endm");
+        
+        double start = Double.parseDouble(starth + "." + startm);
+        double end = Double.parseDouble(endh + "." + endm);
+        String day = request.getParameter("day");
 
-        String sqlQuery = "SELECT * FROM user WHERE login = ?";
+        String sqlInsert = "INSERT INTO booking(courtid, userid, day, start, end) VALUES(?, ?, ?, ?, ?);";
 
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, login); // get user by login only, no need for password
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String dbPasswordHash = rs.getString("password");
-                String salt = rs.getString("salt");
-                userType = rs.getString("usertype");
-                fullName = rs.getString("fullname");
+            PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
+            preparedStatement.setInt(1, courtId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.setString(3, day);
+            preparedStatement.setDouble(4, start);
+            preparedStatement.setDouble(5, end);
 
-                user.setId(id);
-                user.setLogin(login);
-                user.setFullName(fullName);
-                user.setUserType(userType);
-                user.setPassword(dbPasswordHash);
-                user.setSalt(salt);
-            }
-        } catch (SQLException ex) {
-            user = null;
-            throw new ServletException("Login failed", ex);
-        }
+            int insertStatus = 0;
+            insertStatus = preparedStatement.executeUpdate();
 
-        if (user != null) {
-
-            String hash = DigestUtils.sha512Hex(password + user.getSalt());
-
-            //validate hash
-            if (hash.equals(user.getPassword())) {
-
-                if ("admin".equals(user.getUserType())) {
-                    session.setAttribute("adminloggedin", user);
-                    response.sendRedirect("DisplayCourtsServlet");
-                } else {
-                    session.setAttribute("clientloggedin", user);
-                    response.sendRedirect("DisplayCourtsServletC");
-                }
-
-            } else {
-
-                //login correct but password is incorrect
+            if (insertStatus == 1) {
                 out.println("<script>");
-                out.println("    alert('Login/Password incorrect');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("    alert('Court Added Successfully');");
+                out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
                 out.println("</script>");
             }
+        } catch (SQLException ex) {
+            throw new ServletException("book insert failed", ex);
+        }
+    }
 
+    void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException {
+        // Get the dispatcher; it gets the main page to the user
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
+
+        if (dispatcher == null) {
+            System.out.println("There was no dispatcher");
+            // No dispatcher means the html file could not be found.
+            res.sendError(res.SC_NO_CONTENT);
         } else {
-            //user with that login not exist
-                out.println("<script>");
-                out.println("    alert('Login/Password incorrect');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
-                out.println("</script>");       
+            dispatcher.forward(req, res);
         }
     }
 
@@ -141,7 +132,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
