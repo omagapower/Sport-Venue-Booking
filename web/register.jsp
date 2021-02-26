@@ -42,8 +42,8 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
-            <h3>Register</h3>
-            <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+              <h3>Register to <strong>SCBS</strong></h3>
+            <p class="mb-4">A way to book sport courts with no hassle.</p>
             <form action="RegisterServlet" method="post">
               <div class="form-group first">
                 <label for="username">Username</label>

@@ -79,7 +79,7 @@
                                                 <p class="text-white text-size-14 margin-bottom-20">Location: ${v.location}<br>Price: ${v.price}<br>Court Number: ${v.id}</p>  
                                             </div> 
                                         </div> 
-                                        <img class="full-img" style="width:340px;height:250px;" src="img/${v.picture}" alt=""/>
+                                        <img class="full-img" src="img/${v.picture}" alt=""/>
                                     </a>	
                                 </div>
                             </c:if>
@@ -91,13 +91,13 @@
         </div>
 
 
-        <br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         
         <footer>
-                <span>Photo by <a href="https://unsplash.com/@sarkozhevnikov?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Evgeny Kozhevnikov</a> on <a href="https://unsplash.com/s/photos/volleyball-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
-                <span>Photo by <a href="https://unsplash.com/@storiesofg?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Gilda Gonzàlez</a> on <a href="https://unsplash.com/s/photos/tennis-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
-                <span>Photo by <a href="https://unsplash.com/@emilevictorp?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Emile-Victor Portenart</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
-                <span>Photo by <a href="https://unsplash.com/@xamh?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Max Hermansson</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
+            <span>Photo by <a href="https://unsplash.com/@sarkozhevnikov?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Evgeny Kozhevnikov</a> on <a href="https://unsplash.com/s/photos/volleyball-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
+            <span>Photo by <a href="https://unsplash.com/@storiesofg?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Gilda Gonzàlez</a> on <a href="https://unsplash.com/s/photos/tennis-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
+            <span>Photo by <a href="https://unsplash.com/@emilevictorp?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Emile-Victor Portenart</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
+            <span>Photo by <a href="https://unsplash.com/@xamh?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Max Hermansson</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> <br>
             </footer>
 
         <script type="text/javascript" src="js/responsee.js"></script>
