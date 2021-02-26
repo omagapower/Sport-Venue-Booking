@@ -58,6 +58,7 @@
                             <p class="nav-text"></p>
                             <ul class="right chevron">
                                 <li><a href="index.html">Home</a></li>
+                                <li><a href="DisplayPersonalBookingServlet?id=<jsp:getProperty name="clientloggedin" property="id"/> ">View My Bookings</a></li>
                                 <li><a href="editProfile.jsp">Edit Profile</a></li>             
                                 <li><a href="logout.jsp">Logout</a></li>
                             </ul>
@@ -93,23 +94,27 @@
                                                 <th>Cancel </th>
                                             </tr>
                                         </thead>
-                                        
-                                            <c:forEach var="v" begin="0" items="${pblist.list}">
-                                                <c:if test="${not empty v.id}">
-                                                    <c:if test="${v.status!='Cancelled'}">
-                                                        <tr>
-                                                            <td><c:out value="${v.id}" /></td>
-                                                            <td><c:out value="${v.day}" /></td>
-                                                            <td><c:out value="${v.start}" /></td>
-                                                            <td><c:out value="${v.end}" /></td>
-                                                            <td><c:out value="${v.status}" /></td>
-                                                            <td><a href="CancelBookingServlet?id=${v.id}&user=${v.userId}" class="btn btn-success">Cancel</a></td>
-                                                        </tr>
-                                                    </c:if>
-                                                </c:if>
-                                            </c:forEach >
 
-                                        
+                                        <c:forEach var="v" begin="0" items="${pblist.list}">
+                                            <c:if test="${not empty v.id}">
+                                                <c:if test="${v.status!='Cancelled'}">
+                                                    <tr>
+                                                        <td><c:out value="${v.id}" /></td>
+                                                        <td><c:out value="${v.day}" /></td>
+                                                        <td><c:out value="${v.start}" /></td>
+                                                        <td><c:out value="${v.end}" /></td>
+                                                        <td><c:out value="${v.status}" /></td>
+                                                        <c:if test="${v.status!='Approved'}">
+                                                            <c:if test="${v.status!='Declined'}">
+                                                                <td><a href="CancelBookingServlet?id=${v.id}&user=${v.userId}" class="btn btn-success">Cancel</a></td>
+                                                            </c:if>
+                                                        </c:if>
+                                                    </tr>
+                                                </c:if>
+                                            </c:if>
+                                        </c:forEach >
+
+
                                     </table>
                                 </div>
                             </div>

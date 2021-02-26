@@ -53,6 +53,7 @@
               <p class="nav-text"></p>
               <ul class="right chevron">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="DisplayPersonalBookingServlet?id=<jsp:getProperty name="clientloggedin" property="id"/> ">View My Bookings</a></li>
                 <li><a href="editProfile.jsp">Edit Profile</a></li>             
                 <li><a href="logout.jsp">Logout</a></li>
               </ul>

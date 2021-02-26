@@ -53,6 +53,7 @@
                             <p class="nav-text"></p>
                             <ul class="right chevron">
                                 <li><a href="index.html">Home</a></li>
+                                <li><a href="DisplayBookingServletAdmin">Manage Bookings</a></li>
                                 <li><a href="editProfileAdmin.jsp">Edit Profile</a></li>             
                                 <li><a href="logout.jsp">Logout</a></li>
                             </ul>

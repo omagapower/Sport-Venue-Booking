@@ -17,7 +17,7 @@
     <% response.sendRedirect(request.getContextPath() + "/index.jsp");%>
 </c:if>
 
-<jsp:useBean id="clientoggedin" class="bean.User" scope="session" />
+<jsp:useBean id="clientloggedin" class="bean.User" scope="session" />
 
 
 
@@ -59,7 +59,8 @@
                             <p class="nav-text"></p>
                             <ul class="right chevron">
                                 <li><a href="index.html">Home</a></li>
-                                <li><a href="editProfileAdmin.jsp">Edit Profile</a></li>             
+                                <li><a href="DisplayPersonalBookingServlet?id=<jsp:getProperty name="clientloggedin" property="id"/> ">View My Bookings</a></li>
+                                <li><a href="editProfile.jsp">Edit Profile</a></li>         
                                 <li><a href="logout.jsp">Logout</a></li>
                             </ul>
                         </div>
@@ -143,16 +144,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="v" begin="0" items="${blist.list}">
-                                            <c:if test="${not empty v.id}">
-                                                <tr>
-                                                    <td><c:out value="${v.id}" /></td>
-                                                <td><c:out value="${v.day}" /></td>
-                                                <td><c:out value="${v.start}" /></td>
-                                                <td><c:out value="${v.end}" /></td>
-                                                </tr>
-                                            </c:if>
-                                        </c:forEach >
+                                            <c:forEach var="v" begin="0" items="${blist.list}">
+                                                <c:if test="${not empty v.id}">
+                                                    <c:if test="${v.status != 'Cancelled'}">
+                                                        <c:if test="${v.status != 'Declined'}">
+                                                            <tr>
+                                                                <td><c:out value="${v.id}" /></td>
+                                                                <td><c:out value="${v.day}" /></td>
+                                                                <td><c:out value="${v.start}" /></td>
+                                                                <td><c:out value="${v.end}" /></td>
+                                                            </tr>
+                                                        </c:if>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach >
 
                                         </tbody>
                                     </table>

@@ -1,7 +1,5 @@
+package client;
 
-package admin;
-
-import client.*;
 import admin.*;
 import bean.Court;
 import bean.CourtList;
@@ -22,13 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
 
-
-/**
- *
- * @author MSI
- */
-@WebServlet(name = "DisplayBookingServletAdmin", urlPatterns = {"/DisplayBookingServletAdmin"})
-public class DisplayBookingServletAdmin extends HttpServlet {
+@WebServlet(name = "DeclineBookingServlet", urlPatterns = {"/DeclineBookingServlet"})
+public class DeclineBookingServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -70,54 +63,41 @@ public class DisplayBookingServletAdmin extends HttpServlet {
         HttpSession session = request.getSession();
 
         PrintWriter out = response.getWriter();
-        
-        BookingList list = new BookingList();
-        
-        String day="", status="";
-        int id, userId, courtId;
-        double start, end;
 
-        String sqlInsert = "SELECT * FROM booking";
-        
-        
+
+        int search = Integer.parseInt(request.getParameter("id"));
+        int userId = Integer.parseInt(request.getParameter("user"));
+        String status = "Declined";
+
+        String sqlInsert = "UPDATE booking SET Status = ? WHERE id = ? ";
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
-            
-            ResultSet rs = preparedStatement.executeQuery();
-            
-            while (rs.next()) {
-                
-                id = rs.getInt("id");
-                userId = rs.getInt("userid");
-                courtId = rs.getInt("courtid");
-                start = rs.getDouble("start");
-                end = rs.getDouble("end");
-                day = rs.getString("day");
-                status = rs.getString("status");
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, search);
 
-                Booking booking = new Booking();
-                
-                booking.setId(id);
-                booking.setUserId(userId);
-                booking.setCourtId(courtId);
-                booking.setStart(start);
-                booking.setEnd(end);
-                booking.setDay(day);
-                booking.setStatus(status); 
-                
-                list.setChild(booking);
-                
+            int insertStatus = 0;
+            insertStatus = preparedStatement.executeUpdate();
+            if (insertStatus == 1) {
+
+                out.println("<script>");
+                out.println("    alert('Booking Declined successfully');");
+                out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServletAdmin?'");
+                out.println("</script>");
+
+            } else {
+
+                out.println("<script>");
+                out.println("    alert('Error Cancelling Booking');");
+                out.println("</script>");
+
             }
 
         } catch (SQLException ex) {
             throw new ServletException("Failed to retrieve court data", ex);
         }
-        session.setAttribute("alllist", list);
-        
-        response.sendRedirect(request.getContextPath() + "/manageBooking.jsp");
     }
-    
+
     void sendPage(HttpServletRequest req, HttpServletResponse res, String fileName) throws ServletException, IOException {
         // Get the dispatcher; it gets the main page to the user
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(fileName);
@@ -130,7 +110,6 @@ public class DisplayBookingServletAdmin extends HttpServlet {
             dispatcher.forward(req, res);
         }
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -171,8 +150,6 @@ public class DisplayBookingServletAdmin extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
-
-
 
 
 
