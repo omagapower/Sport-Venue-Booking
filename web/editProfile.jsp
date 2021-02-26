@@ -102,22 +102,7 @@
       
       <!-- FOOTER -->
       <footer>
-        <!-- Contact Us -->
-        <div class="background-dark padding text-center footer-social">
-          <a class="margin-right-10" target="_blank" href="https://www.facebook.com"><i class="icon-facebook_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">FACEBOOK</span></a>
-          <a class="margin-right-10" target="_blank" href="https://www.twitter.com"><i class="icon-twitter_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">TWITTER</span></a>
-          <a class="margin-right-10" target="_blank" href="https://www.instagram.com"><i class="icon-instagram_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">INSTAGRAM</span></a>
-          <a target="_blank" href="https://www.linkedin.com"><i class="icon-linked_in_circle text-size-30"></i> <span class="text-strong text-white hide-s hide-m">LINKEDIN</span></a>                                                                         
-        </div>
-
-        <hr class="break margin-top-bottom-0" style="border-color: rgba(0, 0, 0, 0.80);">
-        
-        <!-- Bottom Footer -->
-        <section class="padding background-dark full-width">
-          <div class="text-center">
-            <p class="text-size-12">Copyright 2019, Vision Design - graphic zoo</p>
-          </div>
-        </section>
+       
       </footer>
     </div>
     <script type="text/javascript" src="js/responsee.js"></script>

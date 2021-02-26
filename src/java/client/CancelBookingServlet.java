@@ -1,11 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package admin;
+package client;
 
-import bean.User;
-import java.io.*;
+import admin.*;
+import bean.Court;
+import bean.CourtList;
+import bean.Booking;
+import bean.BookingList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -20,15 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.codec.digest.DigestUtils;
 
-/**
- *
- * @author MSI
- */
-@WebServlet(name = "BookCourtServlet", urlPatterns = {"/BookCourtServlet"})
-public class BookCourtServlet extends HttpServlet {
+@WebServlet(name = "CancelBookingServlet", urlPatterns = {"/CancelBookingServlet"})
+public class CancelBookingServlet extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
     private Connection con;
@@ -68,44 +61,40 @@ public class BookCourtServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        
+
         PrintWriter out = response.getWriter();
 
-        //get form data from VIEW > V-I
-        int courtId = Integer.parseInt(request.getParameter("courtId"));
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        String starth = request.getParameter("starth");
-        String startm = request.getParameter("startm");
-        String endh = request.getParameter("endh");
-        String endm = request.getParameter("endm");
-        
-        double start = Double.parseDouble(starth + "." + startm);
-        double end = Double.parseDouble(endh + "." + endm);
-        String day = request.getParameter("day");
-        String status = "Awaiting Approval";
 
-        String sqlInsert = "INSERT INTO booking(courtid, userid, day, start, end, status) VALUES(?, ?, ?, ?, ?, ?);";
+        int search = Integer.parseInt(request.getParameter("id"));
+        int userId = Integer.parseInt(request.getParameter("user"));
+        String status = "Cancelled";
+
+        String sqlInsert = "UPDATE booking SET Status = ? WHERE id = ? ";
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
-            preparedStatement.setInt(1, courtId);
-            preparedStatement.setInt(2, userId);
-            preparedStatement.setString(3, day);
-            preparedStatement.setDouble(4, start);
-            preparedStatement.setDouble(5, end);
-            preparedStatement.setString(6, status);
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, search);
 
             int insertStatus = 0;
             insertStatus = preparedStatement.executeUpdate();
-
             if (insertStatus == 1) {
+
                 out.println("<script>");
-                out.println("    alert('Court Added Successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                out.println("    alert('Booking Cancelled successfully');");
+                out.println("    window.location = '/Sport-Venue-Booking/DisplayPersonalBookingServlet?id=" + userId + "'");
                 out.println("</script>");
+
+            } else {
+
+                out.println("<script>");
+                out.println("    alert('Error Cancelling Booking');");
+                out.println("</script>");
+
             }
+
         } catch (SQLException ex) {
-            throw new ServletException("book insert failed", ex);
+            throw new ServletException("Failed to retrieve court data", ex);
         }
     }
 
@@ -134,6 +123,7 @@ public class BookCourtServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

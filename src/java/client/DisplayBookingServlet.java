@@ -73,7 +73,7 @@ public class DisplayBookingServlet extends HttpServlet {
         BookingList list = new BookingList();
         
         int search = Integer.parseInt(request.getParameter("id"));
-        String day="";
+        String day="", status="";
         int id, userId, courtId;
         double start, end;
 
@@ -95,6 +95,7 @@ public class DisplayBookingServlet extends HttpServlet {
                 start = rs.getDouble("start");
                 end = rs.getDouble("end");
                 day = rs.getString("day");
+                status = rs.getString("status");
 
                 Booking booking = new Booking();
                 
@@ -104,6 +105,7 @@ public class DisplayBookingServlet extends HttpServlet {
                 booking.setStart(start);
                 booking.setEnd(end);
                 booking.setDay(day);
+                booking.setStatus(status);
                 
                 list.setChild(booking);
                 

@@ -36,7 +36,7 @@
   
 
   <div class="d-lg-flex half">
-    <div class="bg order-1 order-md-2" style="background-image: url('images/bg_1.jpg');"></div>
+    <div class="bg order-1 order-md-2" style="background-image: url('img/bg.jpg');"></div>
     <div class="contents order-2 order-md-1">
 
       <div class="container">
@@ -76,7 +76,8 @@
 
     
   </div>
-    
+    <span>Photo by <a href="https://unsplash.com/@ripato?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ricardo Gomez Angel</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+
     
 
     <script src="js/jquery-3.3.1.min.js"></script>

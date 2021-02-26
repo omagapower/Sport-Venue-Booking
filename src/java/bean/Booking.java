@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Booking implements Serializable {
     private int id, courtId, userId;
     private double start, end;
-    private String day;
+    private String day, status;
 
     public int getId() {
         return id;
@@ -43,6 +43,15 @@ public class Booking implements Serializable {
    
     public void setDay(String day) {
         this.day = day;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+   
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     

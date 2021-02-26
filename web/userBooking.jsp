@@ -1,12 +1,14 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="bean.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="bean.Court" %>
 <%@ page import="bean.CourtList" %>
+<%@ page import="bean.Booking" %>
+<%@ page import="bean.BookingList" %>
 
-<jsp:useBean id="clientloggedin" class="bean.User" scope="session"/>
-<jsp:useBean id="list" class="bean.CourtList" scope="session"/>
+<jsp:useBean id="pblist" class="bean.BookingList" scope="session"/>
 
 
 
@@ -14,11 +16,16 @@
     <% response.sendRedirect(request.getContextPath() + "/index.jsp");%>
 </c:if>
 
+<jsp:useBean id="clientoggedin" class="bean.User" scope="session" />
+
+
+
+
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Football Courts</title>
+        <title>Edit Profile</title>
         <link rel="stylesheet" href="css/components.css">
         <link rel="stylesheet" href="css/icons.css">
         <link rel="stylesheet" href="css/responsee.css">
@@ -51,7 +58,6 @@
                             <p class="nav-text"></p>
                             <ul class="right chevron">
                                 <li><a href="index.html">Home</a></li>
-                                <li><a href="DisplayPersonalBookingServlet?id=<jsp:getProperty name="clientloggedin" property="id"/> ">View My Bookings</a></li>
                                 <li><a href="editProfile.jsp">Edit Profile</a></li>             
                                 <li><a href="logout.jsp">Logout</a></li>
                             </ul>
@@ -64,39 +70,57 @@
             <main role="main">
                 <!-- Content -->
                 <article>
-                    <div class="line text-center">        
-                        <h1 class="text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1">Court List</h1>
-                    </div>
-                    <div class="background-white full-width"> 
 
-                        <c:forEach var="v" begin="0" items="${list.list}">
-                            <c:if test="${not empty v.id}">
-                                <div class="s-12 m-6 l-five">
-                                    <a class="image-with-hover-overlay image-hover-zoom" href="DisplayBookingServlet?id=${v.id}" title="Portfolio Image">
-                                        <div class="image-hover-overlay background-primary"> 
-                                            <div class="image-hover-overlay-content text-center padding-2x">
-                                                <h3 class="text-white text-size-20 margin-bottom-10">${v.name}</h3>
-                                                <p class="text-white text-size-14 margin-bottom-20">Location: ${v.location}<br>Price: ${v.price}</p>  
-                                            </div> 
-                                        </div> 
-                                        <img class="full-img" src="img/${v.picture}" alt=""/>
-                                    </a>	
+
+
+
+
+
+
+                    <div class="s-12 m-12 l-4 center">
+                        <h2>Current Bookings: </h2>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-wrap">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Booking</th>
+                                                <th>Date </th>
+                                                <th>Start Time (00.00 = 00:00)</th>
+                                                <th>End Time (00.00 = 00:00) </th>
+                                                <th>Status </th>
+                                                <th>Cancel </th>
+                                            </tr>
+                                        </thead>
+                                        
+                                            <c:forEach var="v" begin="0" items="${pblist.list}">
+                                                <c:if test="${not empty v.id}">
+                                                    <c:if test="${v.status!='Cancelled'}">
+                                                        <tr>
+                                                            <td><c:out value="${v.id}" /></td>
+                                                            <td><c:out value="${v.day}" /></td>
+                                                            <td><c:out value="${v.start}" /></td>
+                                                            <td><c:out value="${v.end}" /></td>
+                                                            <td><c:out value="${v.status}" /></td>
+                                                            <td><a href="CancelBookingServlet?id=${v.id}&user=${v.userId}" class="btn btn-success">Cancel</a></td>
+                                                        </tr>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach >
+
+                                        
+                                    </table>
                                 </div>
-                            </c:if>
-                        </c:forEach >
-                    </div>  
+                            </div>
+                        </div>
+                    </div>
+
                 </article>
             </main>
+            <br><br><br><br>
 
         </div>
-
-
-        <br><br><br><br><br><br><br><br><br><br><br>
-        
-        <footer>
-            <span>Default photo by <a href="https://unsplash.com/@xamh?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Max Hermansson</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
-        </footer>
-
         <script type="text/javascript" src="js/responsee.js"></script>
         <script type="text/javascript" src="js/jquery.events.touch.js"></script>
         <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
