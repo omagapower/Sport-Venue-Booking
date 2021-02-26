@@ -4,8 +4,13 @@
 <%@ page import="bean.User" %>
 <%@ page import="bean.Court" %>
 <%@ page import="bean.CourtList" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 
 <jsp:useBean id="list" class="bean.CourtList" scope="session"/>
+
 
 
 <c:if test="${sessionScope.adminloggedin == null}">
@@ -89,9 +94,13 @@
                                                         <th>Court Name</th>
                                                         <th>Location</th>
                                                         <th>Price/hour</th>
+                                                        <th>Status</th>
                                                         <th></th>
                                                         <th>Update</th>
                                                         <th>Delete</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th>Report</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -101,9 +110,13 @@
                                                                 <td><c:out value="${v.name}" /></td>
                                                                 <td><c:out value="${v.location}" /></td>
                                                                 <td>RM<c:out value="${v.price}" />/hour</td>
+                                                                <td><c:out value="${v.status}" /></td>
                                                                 <td></td>
                                                                 <td><a href="updateCourt.jsp?id=${v.id}" class="btn btn-success">Update</a></td>
                                                                 <td><a href="DeleteCourtServlet?id=${v.id}" class="btn btn-success">Delete</a></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td><a href="ReportCourtServlet?id=${v.id}" class="btn btn-success">Get Report</a></td>
                                                             </tr>
                                                         </c:if>
                                                     </c:forEach >

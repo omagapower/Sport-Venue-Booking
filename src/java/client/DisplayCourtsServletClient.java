@@ -27,7 +27,7 @@ import jdbc.JDBCUtility;
  *
  * @author MSI
  */
-@WebServlet(name = "DisplayCourtsServletC", urlPatterns = {"/DisplayCourtsServletC"})
+@WebServlet(name = "DisplayCourtsServletClient", urlPatterns = {"/DisplayCourtsServletClient"})
 public class DisplayCourtsServletClient extends HttpServlet {
 
     private JDBCUtility jdbcUtility;
@@ -78,6 +78,8 @@ public class DisplayCourtsServletClient extends HttpServlet {
         double price;
 
         String sqlInsert = "SELECT * FROM courts";
+        
+        
         
         
 

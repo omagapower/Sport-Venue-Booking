@@ -76,7 +76,7 @@
                                         <div class="image-hover-overlay background-primary"> 
                                             <div class="image-hover-overlay-content text-center padding-2x">
                                                 <h3 class="text-white text-size-20 margin-bottom-10">${v.name}</h3>
-                                                <p class="text-white text-size-14 margin-bottom-20">Location: ${v.location}<br>Price: ${v.price}</p>  
+                                                <p class="text-white text-size-14 margin-bottom-20">Location: ${v.location}<br>Price: ${v.price}<br>Court Number: ${v.id}</p>  
                                             </div> 
                                         </div> 
                                         <img class="full-img" src="img/${v.picture}" alt=""/>

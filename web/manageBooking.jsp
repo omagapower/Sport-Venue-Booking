@@ -87,6 +87,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Booking</th>
+                                                <th>CourtID</th>
                                                 <th>Date </th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
@@ -101,6 +102,7 @@
 
                                                 <tr>
                                                     <td><c:out value="${v.id}" /></td>
+                                                    <td><c:out value="${v.courtId}" /></td>
                                                     <td><c:out value="${v.day}" /></td>
                                                     <td><c:out value="${v.start}" /></td>
                                                     <td><c:out value="${v.end}" /></td>

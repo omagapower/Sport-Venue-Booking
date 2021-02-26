@@ -108,7 +108,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("DisplayCourtsServlet");
                 } else {
                     session.setAttribute("clientloggedin", user);
-                    response.sendRedirect("DisplayCourtsServletC");
+                    response.sendRedirect("DisplayCourtsServletClient");
                 }
 
             } else {

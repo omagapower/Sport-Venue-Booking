@@ -133,12 +133,13 @@ public class BookCourtServlet extends HttpServlet {
             error = true;
         }
 
-        String sqlSelect = "SELECT * FROM booking WHERE day = ?";
+        String sqlSelect = "SELECT * FROM booking WHERE day = ? AND courtid = ?";
         String sqlInsert = "INSERT INTO booking(courtid, userid, day, start, end, status) VALUES(?, ?, ?, ?, ?, ?);";
 
         try {
             PreparedStatement preparedStatement1 = con.prepareStatement(sqlSelect);
             preparedStatement1.setString(1, day);
+            preparedStatement1.setInt(2, courtId);
             ResultSet rs = preparedStatement1.executeQuery();
 
             while (rs.next()) {

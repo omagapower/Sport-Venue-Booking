@@ -2,13 +2,24 @@
 package bean;
 
 import java.io.Serializable;
+import java.sql.Time;
 
 
 public class Court implements Serializable {
     private int id;
-    private String name, location, picture;
+    private String name, location, picture, status;
     private double price;
 
+    
+    public String getStatus() {
+        return status;
+    }
+
+   
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public String getName() {
         return name;
     }

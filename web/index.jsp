@@ -6,11 +6,11 @@
 
 
 <c:if test="${sessionScope.clientloggedin != null}">
-    <% response.sendRedirect(request.getContextPath() + "/client.jsp"); %>
+    <% response.sendRedirect(request.getContextPath() + "/DisplayCourtsServletClient"); %>
 </c:if>
 
 <c:if test="${sessionScope.adminloggedin != null}">
-    <% response.sendRedirect(request.getContextPath() + "/admin.jsp");%>
+    <% response.sendRedirect(request.getContextPath() + "/DisplayCourtsServlet");%>
 </c:if>
 
 <html lang="en">
