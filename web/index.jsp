@@ -35,7 +35,7 @@
 
     <body>
 
-        
+
         <div class="d-lg-flex half">
             <div class="bg order-1 order-md-2" style="background-image: url('img/bg.jpg');"></div>
             <div class="contents order-2 order-md-1">
@@ -43,7 +43,8 @@
                 <div class="container">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-7">
-                            <h3>Login</h3>
+                            <h3>Login to <strong>SCBS</strong></h3>
+                            <p class="mb-4">A way to book sport courts with no hassle.</p>
                             <form action="LoginServlet" method="post">
                                 <div class="form-group first">
                                     <label for="username">Username</label>
@@ -70,7 +71,7 @@
                 </div>
             </div>
         </div>
-        
+
         <span>Photo by <a href="https://unsplash.com/@ripato?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ricardo Gomez Angel</a> on <a href="https://unsplash.com/s/photos/soccer-court?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 
 
