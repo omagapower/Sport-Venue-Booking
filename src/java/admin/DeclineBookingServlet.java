@@ -66,7 +66,6 @@ public class DeclineBookingServlet extends HttpServlet {
 
 
         int search = Integer.parseInt(request.getParameter("id"));
-        int userId = Integer.parseInt(request.getParameter("user"));
         String status = "Declined";
 
         String sqlInsert = "UPDATE booking SET Status = ? WHERE id = ? ";

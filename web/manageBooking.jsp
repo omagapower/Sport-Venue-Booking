@@ -59,7 +59,7 @@
                             <ul class="right chevron">
                                 <li><a href="index.html">Home</a></li>
                                 <li><a href="DisplayBookingServletAdmin">Manage Bookings</a></li>
-                                <li><a href="editProfile.jsp">Edit Profile</a></li>             
+                                <li><a href="editProfileAdmin.jsp">Edit Profile</a></li>             
                                 <li><a href="logout.jsp">Logout</a></li>
                             </ul>
                         </div>
@@ -108,8 +108,8 @@
                                                     <c:if test="${v.status!='Cancelled'}">
                                                         <c:if test="${v.status!='Approved'}">
                                                             <c:if test="${v.status!='Declined'}">
-                                                                <td><a href="ApproveBookingServlet?id=${v.id}&user=${v.userId}" class="btn btn-success">Approve</a></td>
-                                                                <td><a href="DeclineBookingServlet?id=${v.id}&user=${v.userId}" class="btn btn-success">Decline</a></td>
+                                                                <td><a href="ApproveBookingServlet?id=${v.id}" class="btn btn-success">Approve</a></td>
+                                                                <td><a href="DeclineBookingServlet?id=${v.id}" class="btn btn-success">Decline</a></td>
                                                             </c:if>
                                                         </c:if>
                                                     </c:if>
