@@ -2,8 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin;
+package client;
 
+import bean.Booking;
+import java.sql.Time;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import bean.User;
 import java.io.*;
 import java.io.IOException;
@@ -12,6 +17,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,7 +76,7 @@ public class BookCourtServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        
+
         PrintWriter out = response.getWriter();
 
         //get form data from VIEW > V-I
@@ -78,31 +86,97 @@ public class BookCourtServlet extends HttpServlet {
         String startm = request.getParameter("startm");
         String endh = request.getParameter("endh");
         String endm = request.getParameter("endm");
-        
-        double start = Double.parseDouble(starth + "." + startm);
-        double end = Double.parseDouble(endh + "." + endm);
+        String currentDay = request.getParameter("currentDay");
+
+        String startd = starth + ":" + startm;
+        String endd = endh + ":" + endm;
+
+        SimpleDateFormat startsdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat endsdf = new SimpleDateFormat("HH:mm");
+
+        long startl = 0;
+        try {
+            startl = startsdf.parse(startd).getTime();
+        } catch (ParseException ex) {
+            Logger.getLogger(BookCourtServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        long endl = 0;
+        try {
+            endl = endsdf.parse(endd).getTime();
+        } catch (ParseException ex) {
+            Logger.getLogger(BookCourtServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Time start = new Time(startl);
+        Time end = new Time(endl);
+
         String day = request.getParameter("day");
+        if("".equals(day)){
+            day = currentDay;
+        }
+        
         String status = "Awaiting Approval";
 
+        boolean clash = false;
+        //sql select variables
+        int id1, userId1, courtId1;
+        Time start1, end1;
+        String day1, status1;
+
+        String sqlSelect = "SELECT * FROM booking WHERE day = ?";
         String sqlInsert = "INSERT INTO booking(courtid, userid, day, start, end, status) VALUES(?, ?, ?, ?, ?, ?);";
 
         try {
-            PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
-            preparedStatement.setInt(1, courtId);
-            preparedStatement.setInt(2, userId);
-            preparedStatement.setString(3, day);
-            preparedStatement.setDouble(4, start);
-            preparedStatement.setDouble(5, end);
-            preparedStatement.setString(6, status);
+            PreparedStatement preparedStatement1 = con.prepareStatement(sqlSelect);
+            preparedStatement1.setString(1, day);
+            ResultSet rs = preparedStatement1.executeQuery();
 
-            int insertStatus = 0;
-            insertStatus = preparedStatement.executeUpdate();
+            while (rs.next()) {
 
-            if (insertStatus == 1) {
+                start1 = rs.getTime("start");
+                end1 = rs.getTime("end");
+                status1 = rs.getString("status");
+
+                    if (start.after(start1)) {
+                        if (start.before(end1)) {
+                            clash = true;
+                        }
+                    }
+
+                    if (end.after(start1)) {
+                        if (end.before(end1)) {
+                            clash = true;
+                        }
+                    }
+
+
+            }
+
+            if (!clash) {
+                PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
+                preparedStatement.setInt(1, courtId);
+                preparedStatement.setInt(2, userId);
+                preparedStatement.setString(3, day);
+                preparedStatement.setTime(4, start);
+                preparedStatement.setTime(5, end);
+                preparedStatement.setString(6, status);
+
+                int insertStatus = 0;
+                insertStatus = preparedStatement.executeUpdate();
+
+                if (insertStatus == 1) {
+                    out.println("<script>");
+                    out.println("    alert('Court Added Successfully');");
+                    out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                    out.println("</script>");
+                }
+            }else{
+                {
                 out.println("<script>");
-                out.println("    alert('Court Added Successfully');");
+                out.println("    alert('The selected time is already booked! Book at a different time.');");
                 out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
-                out.println("</script>");
+                out.println("</script>");       
+        }
             }
         } catch (SQLException ex) {
             throw new ServletException("book insert failed", ex);

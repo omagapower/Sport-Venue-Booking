@@ -7,6 +7,11 @@
 <%@ page import="bean.CourtList" %>
 <%@ page import="bean.Booking" %>
 <%@ page import="bean.BookingList" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+
+
 
 <jsp:useBean id="list" class="bean.CourtList" scope="session"/>
 <jsp:useBean id="blist" class="bean.BookingList" scope="session"/>
@@ -75,6 +80,15 @@
                     <%
                         int id = Integer.parseInt(request.getParameter("id"));
                         session.setAttribute("id", id);
+                        
+                        //set today as default value for date input
+                        Date current = new java.util.Date();
+                        
+                        DateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+                        
+                        String date = sdf.format(current);
+                        
+                        session.setAttribute("date", date);
                     %>
 
                     <c:set var="id" value="${sessionScope.id}"/>
@@ -101,25 +115,29 @@
 
 
                             <c:set var="id" value="${sessionScope.id}"/>
+                            <c:set var="date" value="${sessionScope.date}"/>
 
                             <input type="hidden" name="courtId" value="${id}">
                             <input type="hidden" name="userId" value="<jsp:getProperty name="clientloggedin" property="id"/>">
+                            <input type="hidden" name="currentDay" value="${date}">
                             <div class="s-12">
                             </div>
-                            <div class="s-12"> 
-                                <input name="day" class="subject" placeholder="Day" title="name" type="date">
+                            <div class="s-12">
+                                 P.S. The date will be set to todays date if left empty
+                                <input name="day" placeholder="Day" title="name" type="date"">
                             </div>
                             <div class="s-12 m-12 l-6">
-                                <input style=" width:250px" name="starth" class="subject" placeholder="Start time: hour" title="start" type="number" min="0" max="23"> <b>:</b>
+                               
+                                <input style=" width:250px" value="00" name="starth" class="subject" placeholder="Start time: hour" title="start" type="number" min="0" max="23"> <b>:</b>
                             </div>
                             <div class="s-12 m-12 l-6">
-                                <input style="margin-left:30px; width:250px" name="startm" class="subject" placeholder="Start time: minute" title="start" type="number" min="0" max="60">
+                                <input style="margin-left:30px; width:250px" value="00" name="startm" class="subject" placeholder="Start time: minute" title="start" type="number" min="0" max="59">
                             </div>
                             <div class="s-12 m-12 l-6"> 
-                                <input style=" width:250px" name="endh" class="subject" placeholder="End time: hour" title="time" type="number" min="0" max="23"> <b>:</b>
+                                <input style=" width:250px" name="endh" value="23" class="subject" placeholder="End time: hour" title="time" type="number" min="0" max="23"> <b>:</b>
                             </div>
                             <div class="s-12 m-12 l-6">
-                                <input style="margin-left:30px; width:250px" name="endm" class="subject" placeholder="End time: minute" title="time" type="number" min="0" max="60">
+                                <input style="margin-left:30px; width:250px" name="endm" value="59" class="subject" placeholder="End time: minute" title="time" type="number" min="0" max="59">
                             </div>
                             <br><br><br><br>
 
@@ -139,8 +157,8 @@
                                             <tr>
                                                 <th>Booking</th>
                                                 <th>Date </th>
-                                                <th>Start Time (00.00 = 00:00)</th>
-                                                <th>End Time (00.00 = 00:00) </th>
+                                                <th>Start Time</th>
+                                                <th>End Time </th>
                                             </tr>
                                         </thead>
                                         <tbody>

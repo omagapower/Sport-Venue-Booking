@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jdbc.JDBCUtility;
+import java.sql.Time;
 
 
 /**
@@ -75,7 +76,7 @@ public class DisplayPersonalBookingServlet extends HttpServlet {
         int search = Integer.parseInt(request.getParameter("id"));
         String day="", status="";
         int id, userId, courtId;
-        double start, end;
+        Time start, end;
 
         String sqlInsert = "SELECT * FROM booking WHERE userid = ?";
         
@@ -92,8 +93,8 @@ public class DisplayPersonalBookingServlet extends HttpServlet {
                 id = rs.getInt("id");
                 userId = rs.getInt("userid");
                 courtId = rs.getInt("courtid");
-                start = rs.getDouble("start");
-                end = rs.getDouble("end");
+                start = rs.getTime("start");
+                end = rs.getTime("end");
                 day = rs.getString("day");
                 status = rs.getString("status");
 

@@ -88,8 +88,8 @@
                                             <tr>
                                                 <th>Booking</th>
                                                 <th>Date </th>
-                                                <th>Start Time (00.00 = 00:00)</th>
-                                                <th>End Time (00.00 = 00:00) </th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
                                                 <th>Status </th>
                                                 <th>Cancel </th>
                                             </tr>

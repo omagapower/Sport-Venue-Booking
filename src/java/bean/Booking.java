@@ -2,11 +2,12 @@
 package bean;
 
 import java.io.Serializable;
+import java.sql.Time;
 
 
 public class Booking implements Serializable {
     private int id, courtId, userId;
-    private double start, end;
+    private Time start, end;
     private String day, status;
 
     public int getId() {
@@ -55,21 +56,21 @@ public class Booking implements Serializable {
     }
 
     
-    public double getStart() {
+    public Time getStart() {
         return start;
     }
 
     
-    public void setStart(double start) {
+    public void setStart(Time start) {
         this.start = start;
     }
     
-    public double getEnd() {
+    public Time getEnd() {
         return end;
     }
 
     
-    public void setEnd(double end) {
+    public void setEnd(Time end) {
         this.end = end;
     }
     
