@@ -73,7 +73,11 @@ public class AddCourtServlet extends HttpServlet {
         String name = request.getParameter("name");
         String location = request.getParameter("location");
         double price = Double.parseDouble(request.getParameter("price"));
-        String picture = "default.jpg";
+        String picture = request.getParameter("picture");
+        if ("" == picture) {
+            picture = "default.jpg";
+        }
+
         PrintWriter out = response.getWriter();
 
         String sqlInsert = "INSERT INTO courts(name, location, price, picture) VALUES(?, ?, ?, ?);";

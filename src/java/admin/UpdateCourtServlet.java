@@ -66,51 +66,46 @@ public class UpdateCourtServlet extends HttpServlet {
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
 
-
         String oldName = request.getParameter("oldName");
         String newName = request.getParameter("name");
         String oldLocation = request.getParameter("oldLocation");
         String newLocation = request.getParameter("location");
         String oldPrice = request.getParameter("oldPrice");
+        String picture = request.getParameter("picture");
+        
+
+
         double newPrice = Double.parseDouble(request.getParameter("price"));
-        
 
-        
-        
-
-        String sqlQuery = "UPDATE courts SET name = ?, location = ?, price = ? WHERE name = ? AND location = ? AND price = ?";
+        String sqlQuery = "UPDATE courts SET name = ?, location = ?, price = ?, picture = ? WHERE name = ? AND location = ? AND price = ?";
 
         try {
 
-            
+            PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, newName);
+            preparedStatement.setString(2, newLocation);
+            preparedStatement.setDouble(3, newPrice);
+            preparedStatement.setString(4, picture);
+            preparedStatement.setString(5, oldName);
+            preparedStatement.setString(6, oldLocation);
+            preparedStatement.setString(7, oldPrice);
 
-                PreparedStatement preparedStatement = con.prepareStatement(sqlQuery);
-                preparedStatement.setString(1, newName);
-                preparedStatement.setString(2, newLocation);
-                preparedStatement.setDouble(3, newPrice);
-                preparedStatement.setString(4, oldName);
-                preparedStatement.setString(5, oldLocation);
-                preparedStatement.setString(6, oldPrice);
+            int insertStatus = 0;
+            insertStatus = preparedStatement.executeUpdate();
+            if (insertStatus == 1) {
 
-                int insertStatus = 0;
-                insertStatus = preparedStatement.executeUpdate();
-                if (insertStatus == 1) {
-                    
-                    
-                    out.println("<script>");
-                    out.println("    alert('Court updated successfully');");
-                    out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
-                    out.println("</script>");
+                out.println("<script>");
+                out.println("    alert('Court updated successfully');");
+                out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
+                out.println("</script>");
 
-                } else {
-                   
+            } else {
 
-                    out.println("<script>");
-                    out.println("    alert('Error updating data');");
-                    out.println("</script>");
+                out.println("<script>");
+                out.println("    alert('Error updating data');");
+                out.println("</script>");
 
-                }
-            
+            }
 
         } catch (SQLException ex) {
             throw new ServletException("Update failed", ex);

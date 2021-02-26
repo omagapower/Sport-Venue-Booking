@@ -76,9 +76,9 @@
                             int id = Integer.parseInt(request.getParameter("id"));
                             session.setAttribute("id", id);
                         %>
-                        
+
                         <c:set var="id" value="${sessionScope.id}"/>
-                        
+
                         <c:forEach var="v" begin="0" items="${list.list}">
                             <c:if test="${v.id == id}">
                                 <form action="UpdateCourtServlet" name="UpdateCourt" class="customform" method="post">
@@ -92,6 +92,7 @@
                                     <input type="hidden" name="oldName" value="${v.name}">
                                     <input type="hidden" name="oldLocation" value="${v.location}">
                                     <input type="hidden" name="oldPrice" value="${v.price}">
+                                    
 
 
                                     <input name="name" class="subject" placeholder="Court Name" title="name" type="text" value="${v.name}">
@@ -105,6 +106,20 @@
                                         <input name="price" class="subject" placeholder="Price/hour" title="price" step="0.01" type="number" value="${v.price}">
                                     </div>
                                     <br><br><br><br>
+
+                                    <div>
+
+                                        <input type="radio" name="picture" value="default.jpg">
+                                        <label for="picture1"><img style="width:250px;height:250px;" src="img/default.jpg"> </label><br>
+                                        <input type="radio" name="picture" value="default2.jpg">
+                                        <label for="picture2"><img style="width:250px;height:250px;" src="img/default2.jpg"> </label><br>
+                                        <input type="radio" name="picture" value="default3.jpg">
+                                        <label for="picture3"><img style="width:250px;height:250px;" src="img/default3.jpg"> </label><br>
+                                        <input type="radio" name="picture" value="default4.jpg">
+                                        <label for="picture4"><img style="width:250px;height:250px;" src="img/default4.jpg"> </label><br>
+                                        <input style="opacity: 0" checked type="radio" name="picture" value="${v.picture}">
+
+                                    </div>
 
 
                                     <div class="s-12"><button class="s-12 submit-form button background-primary text-white" type="submit">Update Court</button></div>

@@ -79,7 +79,7 @@
                                                 <p class="text-white text-size-14 margin-bottom-20">Location: ${v.location}<br>Price: ${v.price}<br>Court Number: ${v.id}</p>  
                                             </div> 
                                         </div> 
-                                        <img class="full-img" src="img/${v.picture}" alt=""/>
+                                        <img class="full-img" style="width:340px;height:250px;" src="img/${v.picture}" alt=""/>
                                     </a>	
                                 </div>
                             </c:if>
