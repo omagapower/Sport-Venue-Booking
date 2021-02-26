@@ -111,10 +111,10 @@ public class BookCourtServlet extends HttpServlet {
         Time end = new Time(endl);
 
         String day = request.getParameter("day");
-        if("".equals(day)){
+        if ("".equals(day)) {
             day = currentDay;
         }
-        
+
         String status = "Awaiting Approval";
 
         boolean clash = false;
@@ -122,6 +122,16 @@ public class BookCourtServlet extends HttpServlet {
         int id1, userId1, courtId1;
         Time start1, end1;
         String day1, status1;
+        
+        boolean error = false;
+        
+        if(end.before(start)){
+            error = true;
+        }
+        
+        if(end.equals(start)){
+            error = true;
+        }
 
         String sqlSelect = "SELECT * FROM booking WHERE day = ?";
         String sqlInsert = "INSERT INTO booking(courtid, userid, day, start, end, status) VALUES(?, ?, ?, ?, ?, ?);";
@@ -137,21 +147,30 @@ public class BookCourtServlet extends HttpServlet {
                 end1 = rs.getTime("end");
                 status1 = rs.getString("status");
 
-                    if (start.after(start1)) {
-                        if (start.before(end1)) {
-                            clash = true;
-                        }
+                
+                if (start.equals(start1)) {
+                    clash = true;
+                }
+
+                if (start.after(start1)) {
+                    if (start.before(end1)) {
+                        clash = true;
+                    }
+                }
+
+                if (end.after(start1)) {
+                    if (end.before(end1)) {
+                        clash = true;
+                    }
+                    if (end.equals(end1)) {
+                        clash = true;
                     }
 
-                    if (end.after(start1)) {
-                        if (end.before(end1)) {
-                            clash = true;
-                        }
-                    }
-
+                }
 
             }
 
+            if(!error){
             if (!clash) {
                 PreparedStatement preparedStatement = con.prepareStatement(sqlInsert);
                 preparedStatement.setInt(1, courtId);
@@ -170,14 +189,18 @@ public class BookCourtServlet extends HttpServlet {
                     out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
                     out.println("</script>");
                 }
-            }else{
-                {
-                out.println("<script>");
-                out.println("    alert('The selected time is already booked! Book at a different time.');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
-                out.println("</script>");       
-        }
+            } else {
+                    out.println("<script>");
+                    out.println("    alert('The selected time is already booked! Book at a different time.');");
+                    out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                    out.println("</script>");
             }
+            }else {
+                    out.println("<script>");
+                    out.println("    alert('Error. End time cannot be before or equal to start time');");
+                    out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                    out.println("</script>");
+                }
         } catch (SQLException ex) {
             throw new ServletException("book insert failed", ex);
         }
