@@ -91,6 +91,7 @@
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
+                                                        <th>Id</th>
                                                         <th>Court Name</th>
                                                         <th>Location</th>
                                                         <th>Price/hour</th>
@@ -107,6 +108,7 @@
                                                     <c:forEach var="v" begin="0" items="${list.list}">
                                                         <c:if test="${not empty v.id}">
                                                             <tr>
+                                                                <td><c:out value="${v.id}" /></td>
                                                                 <td><c:out value="${v.name}" /></td>
                                                                 <td><c:out value="${v.location}" /></td>
                                                                 <td>RM<c:out value="${v.price}" />/hour</td>
