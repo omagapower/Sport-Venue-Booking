@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Java%20webapps/Project/src/java/jdbc/JDBCUtility.java</file>
-            <file>file:/D:/Java%20webapps/Project/src/java/jdbc/LoginServlet.java</file>
-            <file>file:/D:/Java%20webapps/Project/src/java/bean/User.java</file>
-            <file>file:/D:/Java%20webapps/Project/web/scss/bootstrap/_navbar.scss</file>
-            <file>file:/D:/Java%20webapps/Project/web/client.html</file>
-            <file>file:/D:/Java%20webapps/Project/web/register.html</file>
-            <file>file:/D:/Java%20webapps/Project/src/java/client/RegisterServlet.java</file>
-            <file>file:/D:/Java%20webapps/Project/web/about-us.html</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/src/java/admin/AddCourtServlet.java</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/web/index.html</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/web/editProfileAdmin.jsp</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/web/addCourt.jsp</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/src/java/client/BookCourtServlet.java</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/src/java/admin/ApproveBookingServlet.java</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/web/booking.jsp</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/src/java/client/CancelBookingServlet.java</file>
+            <file>file:/C:/Users/opowe/Desktop/gitProjects/Sport%20Venue%20Booking%20(IP%20PROJECT)/Sport-Venue-Booking/src/java/admin/DeleteCourtServlet.java</file>
         </group>
     </open-files>
 </project-private>
