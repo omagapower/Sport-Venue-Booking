@@ -126,18 +126,26 @@
                                  P.S. The date will be set to todays date if left empty
                                 <input name="day" placeholder="Day" title="name" type="date"">
                             </div>
+                            <div class="s-12">
+                                Start Time
+                            </div>
+                            
                             <div class="s-12 m-12 l-6">
-                               
-                                <input style=" width:250px" value="00" name="starth" class="subject" placeholder="Start time: hour" title="start" type="number" min="0" max="23"> <b>:</b>
+                                <input value="00" name="starth" class="subject" placeholder="Start time: hour" title="start" type="number" min="0" max="23"> <b></b>
                             </div>
                             <div class="s-12 m-12 l-6">
-                                <input style="margin-left:30px; width:250px" value="00" name="startm" class="subject" placeholder="Start time: minute" title="start" type="number" min="0" max="59">
+                                <input style="margin-left:30px;" value="00" name="startm" class="subject" placeholder="Start time: minute" title="start" type="number" min="0" max="59">
                             </div>
+                            <div class="s-12">
+                                End Time
+                            </div>
+                            
                             <div class="s-12 m-12 l-6"> 
-                                <input style=" width:250px" name="endh" value="23" class="subject" placeholder="End time: hour" title="time" type="number" min="0" max="23"> <b>:</b>
+                                
+                                <input  name="endh" value="23" class="subject" placeholder="End time: hour" title="time" type="number" min="0" max="23"> <b></b>
                             </div>
                             <div class="s-12 m-12 l-6">
-                                <input style="margin-left:30px; width:250px" name="endm" value="59" class="subject" placeholder="End time: minute" title="time" type="number" min="0" max="59">
+                                <input style="margin-left:30px;" name="endm" value="59" class="subject" placeholder="End time: minute" title="time" type="number" min="0" max="59">
                             </div>
                             <br><br><br><br>
 

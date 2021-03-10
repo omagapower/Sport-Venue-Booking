@@ -9,14 +9,14 @@
 <%@ page import="bean.BookingList" %>
 
 <jsp:useBean id="pblist" class="bean.BookingList" scope="session"/>
-
+<jsp:useBean id="clientloggedin" class="bean.User" scope="session" />
 
 
 <c:if test="${sessionScope.clientloggedin == null}">
     <% response.sendRedirect(request.getContextPath() + "/index.jsp");%>
 </c:if>
 
-<jsp:useBean id="clientoggedin" class="bean.User" scope="session" />
+
 
 
 
