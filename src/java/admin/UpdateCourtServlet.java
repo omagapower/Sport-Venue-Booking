@@ -36,9 +36,10 @@ public class UpdateCourtServlet extends HttpServlet {
         String driver = "com.mysql.jdbc.Driver";
 
         String dbName = "sql5398016";
-        String url = "jdbc:mysql://sql5.freesqldatabase.com" + dbName + "?";
+        String url = "jdbc:mysql://sql5.freesqldatabase.com:3306/" + dbName + "?";
         String userName = "sql5398016";
         String password = "Rjxt6itiQA";
+
 
         jdbcUtility = new JDBCUtility(driver,
                 url,
