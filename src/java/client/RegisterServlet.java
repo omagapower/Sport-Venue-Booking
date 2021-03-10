@@ -112,7 +112,7 @@ public class RegisterServlet extends HttpServlet {
                 if (insertStatus == 1) {
                     out.println("<script>");
                     out.println("    alert('Account created successfully');");
-                    out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                    out.println("    window.location = '/index.jsp'");
                     out.println("</script>");
                 }
             } else {
@@ -120,7 +120,7 @@ public class RegisterServlet extends HttpServlet {
 
                 out.println("<script>");
                 out.println("    alert('Password and confirm password not similar, try again');");
-                out.println("    window.location = '/Sport-Venue-Booking/register.jsp'");
+                out.println("    window.location = '/register.jsp'");
                 out.println("</script>");
 
             }

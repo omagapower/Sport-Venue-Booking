@@ -83,7 +83,7 @@ public class CancelBookingServlet extends HttpServlet {
 
                 out.println("<script>");
                 out.println("    alert('Booking Cancelled successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayPersonalBookingServlet?id=" + userId + "'");
+                out.println("    window.location = '/DisplayPersonalBookingServlet?id=" + userId + "'");
                 out.println("</script>");
 
             } else {

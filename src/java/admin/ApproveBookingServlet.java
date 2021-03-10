@@ -82,7 +82,7 @@ public class ApproveBookingServlet extends HttpServlet {
 
                 out.println("<script>");
                 out.println("    alert('Booking Approved successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServletAdmin?'");
+                out.println("    window.location = '/DisplayBookingServletAdmin?'");
                 out.println("</script>");
 
             } else {

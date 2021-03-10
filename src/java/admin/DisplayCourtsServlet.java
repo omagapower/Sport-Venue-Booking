@@ -171,7 +171,7 @@ public class DisplayCourtsServlet extends HttpServlet {
         session.setAttribute("list", list);
 
         out.println("<script>");
-        out.println("    window.location = '/Sport-Venue-Booking/admin.jsp'");
+        out.println("    window.location = '/admin.jsp'");
         out.println("</script>");
     }
 

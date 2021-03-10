@@ -117,7 +117,7 @@ public class LoginServlet extends HttpServlet {
                 //login correct but password is incorrect
                 out.println("<script>");
                 out.println("    alert('Login/Password incorrect');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("    window.location = '/index.jsp'");
                 out.println("</script>");
             }
 
@@ -125,7 +125,7 @@ public class LoginServlet extends HttpServlet {
             //user with that login not exist
                 out.println("<script>");
                 out.println("    alert('Login/Password incorrect');");
-                out.println("    window.location = '/Sport-Venue-Booking/index.jsp'");
+                out.println("    window.location = '/index.jsp'");
                 out.println("</script>");       
         }
     }

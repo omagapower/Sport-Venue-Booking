@@ -229,19 +229,19 @@ public class BookCourtServlet extends HttpServlet {
                     if (insertStatus == 1) {
                         out.println("<script>");
                         out.println("    alert('Court Added Successfully');");
-                        out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                        out.println("    window.location = '/DisplayBookingServlet?id=" + courtId + "'");
                         out.println("</script>");
                     }
                 } else {
                     out.println("<script>");
                     out.println("    alert('The selected time is already booked! Book at a different time.');");
-                    out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                    out.println("    window.location = '/DisplayBookingServlet?id=" + courtId + "'");
                     out.println("</script>");
                 }
             } else {
                 out.println("<script>");
                 out.println("    alert('Error. End time cannot be before or equal to start time');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayBookingServlet?id=" + courtId + "'");
+                out.println("    window.location = '/DisplayBookingServlet?id=" + courtId + "'");
                 out.println("</script>");
             }
         } catch (SQLException ex) {

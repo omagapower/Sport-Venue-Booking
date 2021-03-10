@@ -97,7 +97,7 @@ public class UpdateCourtServlet extends HttpServlet {
 
                 out.println("<script>");
                 out.println("    alert('Court updated successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
+                out.println("    window.location = '/DisplayCourtsServlet'");
                 out.println("</script>");
 
             } else {

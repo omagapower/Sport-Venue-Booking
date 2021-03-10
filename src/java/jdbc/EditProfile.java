@@ -146,9 +146,9 @@ public class EditProfile extends HttpServlet {
                 out.println("    alert('Password and confirm password not similar, try again');");
 
                 if ("admin".equals(userType)) {
-                    out.println("    window.location = '/Sport-Venue-Booking/editProfileAdmin.jsp'");
+                    out.println("    window.location = '/editProfileAdmin.jsp'");
                 } else {
-                    out.println("    window.location = '/Sport-Venue-Booking/editProfile.jsp'");
+                    out.println("    window.location = '/editProfile.jsp'");
                 }
 
                 out.println("</script>");

@@ -216,7 +216,7 @@ public class ReportCourtServlet extends HttpServlet {
         session.setAttribute("Rblist", blist);
 
         out.println("<script>");
-        out.println("    window.location = '/Sport-Venue-Booking/courtReport.jsp'");
+        out.println("    window.location = '/courtReport.jsp'");
         out.println("</script>");
     }
 

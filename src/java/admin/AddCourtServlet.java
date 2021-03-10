@@ -95,7 +95,7 @@ public class AddCourtServlet extends HttpServlet {
             if (insertStatus == 1) {
                 out.println("<script>");
                 out.println("    alert('Court Added Successfully');");
-                out.println("    window.location = '/Sport-Venue-Booking/DisplayCourtsServlet'");
+                out.println("    window.location = '/DisplayCourtsServlet'");
                 out.println("</script>");
             }
         } catch (SQLException ex) {
