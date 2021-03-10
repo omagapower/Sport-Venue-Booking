@@ -34,10 +34,10 @@ public class ApproveBookingServlet extends HttpServlet {
     public void init() throws ServletException {
         String driver = "com.mysql.jdbc.Driver";
 
-        String dbName = "sportCenter";
-        String url = "jdbc:mysql://localhost/" + dbName + "?";
-        String userName = "root";
-        String password = "";
+        String dbName = "sql5398016";
+        String url = "jdbc:mysql://sql5.freesqldatabase.com" + dbName + "?";
+        String userName = "sql5398016";
+        String password = "Rjxt6itiQA";
 
         jdbcUtility = new JDBCUtility(driver,
                 url,
